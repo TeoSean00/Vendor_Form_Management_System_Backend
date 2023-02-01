@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -76,7 +75,6 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> logoutUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(null);
