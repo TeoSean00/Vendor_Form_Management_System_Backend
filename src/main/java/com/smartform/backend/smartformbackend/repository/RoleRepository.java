@@ -8,5 +8,6 @@ import com.smartform.backend.smartformbackend.models.ERole;
 import com.smartform.backend.smartformbackend.models.Role;
 
 public interface RoleRepository extends MongoRepository<Role, String> {
+
     Optional<Role> findByName(ERole name);
 }
