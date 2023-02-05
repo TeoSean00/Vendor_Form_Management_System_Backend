@@ -1,5 +1,6 @@
 package com.smartform.backend.smartformbackend.workflow;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -13,6 +14,11 @@ public class Workflow {
     private String name;
 
     private List<String> users;
+
+    public Workflow(String name) {
+        this.name = name;
+        this.users = new ArrayList<String>();
+    }
 
     // CRUD for name
     public String getName() {

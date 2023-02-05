@@ -20,15 +20,18 @@ public class RoleService implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // TODO Auto-generated method stub
-        List<Role> roleList = new ArrayList<Role>();
-        roleList.add(new Role(ERole.ROLE_USER));
-        roleList.add(new Role(ERole.ROLE_ADMIN));
-        roleList.add(new Role(ERole.ROLE_MODERATOR));
+        List<Role> roleList = roleRepository.findAll();
 
-        try {
-            roleRepository.saveAll(roleList);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (roleList.size() == 0) {
+            roleList.add(new Role(ERole.ROLE_USER));
+            roleList.add(new Role(ERole.ROLE_ADMIN));
+            roleList.add(new Role(ERole.ROLE_MODERATOR));
+
+            try {
+                roleRepository.saveAll(roleList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
