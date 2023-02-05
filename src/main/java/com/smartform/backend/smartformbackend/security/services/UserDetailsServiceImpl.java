@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.smartform.backend.smartformbackend.models.User;
-import com.smartform.backend.smartformbackend.repository.UserRepository;
+import com.smartform.backend.smartformbackend.auth.User;
+import com.smartform.backend.smartformbackend.auth.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

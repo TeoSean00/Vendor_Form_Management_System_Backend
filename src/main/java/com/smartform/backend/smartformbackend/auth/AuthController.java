@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.controllers;
+package com.smartform.backend.smartformbackend.auth;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,15 +22,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.smartform.backend.smartformbackend.models.ERole;
-import com.smartform.backend.smartformbackend.models.Role;
-import com.smartform.backend.smartformbackend.models.User;
-import com.smartform.backend.smartformbackend.payload.request.LoginRequest;
-import com.smartform.backend.smartformbackend.payload.request.SignupRequest;
-import com.smartform.backend.smartformbackend.payload.response.JwtResponse;
-import com.smartform.backend.smartformbackend.payload.response.MessageResponse;
-import com.smartform.backend.smartformbackend.repository.RoleRepository;
-import com.smartform.backend.smartformbackend.repository.UserRepository;
+import com.smartform.backend.smartformbackend.auth.payload.request.LoginRequest;
+import com.smartform.backend.smartformbackend.auth.payload.request.SignupRequest;
+import com.smartform.backend.smartformbackend.auth.payload.response.JwtResponse;
+import com.smartform.backend.smartformbackend.auth.payload.response.MessageResponse;
+import com.smartform.backend.smartformbackend.auth.repository.RoleRepository;
+import com.smartform.backend.smartformbackend.auth.repository.UserRepository;
 import com.smartform.backend.smartformbackend.security.jwt.JwtUtils;
 import com.smartform.backend.smartformbackend.security.services.UserDetailsImpl;
 

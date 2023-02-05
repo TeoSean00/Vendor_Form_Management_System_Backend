@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.models;
+package com.smartform.backend.smartformbackend.auth;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

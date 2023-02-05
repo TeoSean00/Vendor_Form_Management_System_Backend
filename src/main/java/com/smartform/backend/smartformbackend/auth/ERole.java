@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.models;
+package com.smartform.backend.smartformbackend.auth;
 
 public enum ERole {
     ROLE_USER,

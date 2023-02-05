@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.payload.response;
+package com.smartform.backend.smartformbackend.auth.payload.response;
 
 import java.util.List;
 

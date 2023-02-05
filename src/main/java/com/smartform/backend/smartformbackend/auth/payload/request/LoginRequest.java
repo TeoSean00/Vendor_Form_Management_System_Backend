@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.payload.request;
+package com.smartform.backend.smartformbackend.auth.payload.request;
 
 import javax.validation.constraints.NotBlank;
 
