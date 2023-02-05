@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.controllers;
+package com.smartform.backend.smartformbackend.test;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.smartform.backend.smartformbackend.models.ERole;
-import com.smartform.backend.smartformbackend.models.Role;
-import com.smartform.backend.smartformbackend.repository.RoleRepository;
+import com.smartform.backend.smartformbackend.auth.ERole;
+import com.smartform.backend.smartformbackend.auth.Role;
+import com.smartform.backend.smartformbackend.auth.repository.RoleRepository;
 
 @Component
 public class RoleService implements CommandLineRunner {

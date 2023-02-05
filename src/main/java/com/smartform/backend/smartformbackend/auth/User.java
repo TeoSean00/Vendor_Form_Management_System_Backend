@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.models;
+package com.smartform.backend.smartformbackend.auth;
 
 import java.util.HashSet;
 import java.util.Set;
