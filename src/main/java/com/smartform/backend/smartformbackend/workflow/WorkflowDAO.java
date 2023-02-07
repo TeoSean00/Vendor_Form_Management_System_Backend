@@ -16,8 +16,8 @@ public class WorkflowDAO {
         return mongoTemplate.findAll(Workflow.class);
     }
 
-    public void saveAll(final List<Workflow> topics) {
-        mongoTemplate.insertAll(topics);
+    public void saveAll(final List<Workflow> workflows) {
+        mongoTemplate.insertAll(workflows);
     }
 
     // update function

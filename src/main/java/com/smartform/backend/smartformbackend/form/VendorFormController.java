@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.workflow;
+package com.smartform.backend.smartformbackend.form;
 
 import java.util.List;
 
@@ -15,42 +15,42 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/workflow")
-public class WorkflowController {
+public class VendorFormController {
     @Autowired
-    private WorkflowDAO workflowDAO;
+    private VendorFormDAO vendorFormDAO;
 
     // anything you return is automatically coverted to JS
-    @GetMapping("/all")
+    @GetMapping("/form/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Workflow> getAllWorkflows() {
-        return workflowDAO.findAll();
+    public List<VendorForm> getAllForms(@PathVariable String workflowId) {
+        return vendorFormDAO.findAll();
     }
 
     // need to tell spring to send the id to the method
-    @RequestMapping("/{id}")
+    @RequestMapping("/{workflowId}/form/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Workflow getTopic(@PathVariable String id) {
+    public VendorForm getTopic(@PathVariable String id) {
         // call a method from the business service of the topic that has the id
-        return workflowDAO.getWorkflow(id);
+        return vendorFormDAO.getVendorForm(id);
     }
 
     // map this method to any request that is a POST at /topics
-    @RequestMapping(method = RequestMethod.POST, value = "")
+    @RequestMapping(method = RequestMethod.POST, value = "/{workflowId}/form")
     // @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
-    public void addWorkflow(@RequestBody Workflow workflow) {
-        workflowDAO.insertWorkflow(workflow);
+    public void addWorkflow(@RequestBody VendorForm vendorForm) {
+        vendorFormDAO.insertVendorForm(vendorForm);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateTopic(@RequestBody Workflow workflow, @PathVariable String id) {
-        workflowDAO.updateWorkflow(id, workflow);
+    public void updateTopic(@RequestBody VendorForm workflow, @PathVariable String id) {
+        vendorFormDAO.updateVendorForm(id, workflow);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteTopic(@PathVariable String id) {
-        workflowDAO.deleteWorkflow(id);
+        vendorFormDAO.deleteWorkflow(id);
     }
 }
