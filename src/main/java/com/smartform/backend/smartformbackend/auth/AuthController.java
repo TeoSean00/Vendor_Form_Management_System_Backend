@@ -72,6 +72,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> logoutUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(null);
