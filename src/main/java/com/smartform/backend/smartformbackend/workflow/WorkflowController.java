@@ -29,12 +29,10 @@ public class WorkflowController {
     // need to tell spring to send the id to the method
     @RequestMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Workflow getTopic(@PathVariable String id) {
-        // call a method from the business service of the topic that has the id
+    public Workflow getWorkflow(@PathVariable String id) {
         return workflowDAO.getWorkflow(id);
     }
 
-    // map this method to any request that is a POST at /topics
     @RequestMapping(method = RequestMethod.POST, value = "")
     // @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
@@ -44,13 +42,13 @@ public class WorkflowController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateTopic(@RequestBody Workflow workflow, @PathVariable String id) {
+    public void updateWorkflow(@RequestBody Workflow workflow, @PathVariable String id) {
         workflowDAO.updateWorkflow(id, workflow);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteTopic(@PathVariable String id) {
+    public void deleteWorkflow(@PathVariable String id) {
         workflowDAO.deleteWorkflow(id);
     }
 }
