@@ -14,43 +14,44 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/form")
 public class VendorFormController {
     @Autowired
     private VendorFormDAO vendorFormDAO;
 
     // anything you return is automatically coverted to JS
-    @GetMapping("/form/all")
+    @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<VendorForm> getAllForms(@PathVariable String workflowId) {
+    public List<VendorForm> getAllForms() {
         return vendorFormDAO.findAll();
     }
 
     // need to tell spring to send the id to the method
-    @RequestMapping("/{workflowId}/form/{id}")
+    @RequestMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public VendorForm getTopic(@PathVariable String id) {
+    public VendorForm getForm(@PathVariable String id) {
         // call a method from the business service of the topic that has the id
         return vendorFormDAO.getVendorForm(id);
     }
 
     // map this method to any request that is a POST at /topics
-    @RequestMapping(method = RequestMethod.POST, value = "/{workflowId}/form")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(method = RequestMethod.POST, value = "")
+    @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
-    public void addWorkflow(@RequestBody VendorForm vendorForm) {
+    public void addForm(@RequestBody VendorForm vendorForm) {
+        // function to iterate through requestbody, based on the inputtype fill in the data
         vendorFormDAO.insertVendorForm(vendorForm);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateTopic(@RequestBody VendorForm workflow, @PathVariable String id) {
+    public void updateForm(@RequestBody VendorForm workflow, @PathVariable String id) {
         vendorFormDAO.updateVendorForm(id, workflow);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteTopic(@PathVariable String id) {
+    public void deleteForm(@PathVariable String id) {
         vendorFormDAO.deleteWorkflow(id);
     }
 }
