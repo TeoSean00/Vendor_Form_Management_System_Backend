@@ -8,6 +8,7 @@ import javax.print.attribute.standard.DateTimeAtCreation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.smartform.backend.smartformbackend.auth.User;
 import com.smartform.backend.smartformbackend.form.VendorForm;
 
 @Document(collection = "workflows")
@@ -15,8 +16,8 @@ public class Workflow {
     @Id
     private String id;
     private String name;
-    private List<String> users;
-    private ArrayList<VendorForm> forms;
+    private List<String> users = new ArrayList<String>();
+    private ArrayList<VendorForm> forms = new ArrayList<VendorForm>();
 
     public Workflow() {
 
@@ -24,13 +25,14 @@ public class Workflow {
 
     public Workflow(String name) {
         this.name = name;
-        this.users = new ArrayList<String>();
-        this.forms = new ArrayList<VendorForm>();
     }
 
-    public Workflow(String name, ArrayList<VendorForm> forms) {
-        this.name = name;
-        this.forms = forms;
+    public String getId(){
+        return this.id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 
     // CRUD for name
@@ -43,11 +45,27 @@ public class Workflow {
     }
 
     // CRUD for users
+    public List<String> getUsers(){
+        return this.users;
+    }
+
+    public void setUsers(List<String> users){
+        this.users = users;
+    }
+
     public void addUser(String userId) {
         this.users.add(userId);
     }
 
     // CRUD for forms
+    public ArrayList<VendorForm> getForms(){
+        return this.forms;
+    }
+
+    public void setForms(ArrayList<VendorForm> forms){
+        this.forms = forms;
+    }
+
     public void insertForm() {
 
     }

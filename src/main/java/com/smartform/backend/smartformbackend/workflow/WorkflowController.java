@@ -34,7 +34,7 @@ public class WorkflowController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
     public void addWorkflow(@RequestBody Workflow workflow) {
         workflowDAO.insertWorkflow(workflow);
