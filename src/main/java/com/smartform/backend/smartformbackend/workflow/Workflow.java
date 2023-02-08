@@ -17,7 +17,7 @@ public class Workflow {
     private String id;
     private String name;
     private List<String> users = new ArrayList<String>();
-    private List<String> forms = new ArrayList<String>();
+    private ArrayList<VendorForm> forms = new ArrayList<VendorForm>();
 
     public Workflow() {
 
@@ -27,11 +27,11 @@ public class Workflow {
         this.name = name;
     }
 
-    public String getId() {
+    public String getId(){
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(String id){
         this.id = id;
     }
 
@@ -45,11 +45,11 @@ public class Workflow {
     }
 
     // CRUD for users
-    public List<String> getUsers() {
+    public List<String> getUsers(){
         return this.users;
     }
 
-    public void setUsers(List<String> users) {
+    public void setUsers(List<String> users){
         this.users = users;
     }
 
@@ -58,16 +58,16 @@ public class Workflow {
     }
 
     // CRUD for forms
-    public List<String> getForms() {
+    public ArrayList<VendorForm> getForms(){
         return this.forms;
     }
 
-    public void setForms(List<String> forms) {
+    public void setForms(ArrayList<VendorForm> forms){
         this.forms = forms;
     }
 
-    public void insertForm(String formId) {
-        this.forms.add(formId);
+    public void insertForm() {
+
     }
 
     public void removeForm() {
