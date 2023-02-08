@@ -37,7 +37,7 @@ public class VendorFormDAO {
         mongoTemplate.remove(deleteObject);
     }
 
-    public VendorForm getVendorForm(final String topicId) {
-        return mongoTemplate.findById(topicId, VendorForm.class);
+    public VendorForm getVendorForm(final String id) {
+        return mongoTemplate.findById(id, VendorForm.class);
     }
 }

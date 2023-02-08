@@ -13,6 +13,9 @@ public class VendorForm {
     private int formNumber;
     private int revNumber;
 
+    private String workflowId;
+    private String workflowName;
+
     public VendorForm(String companyName, String creationDate, String formName, int formNumber, int revNumber) {
         this.companyName = companyName;
         this.creationDate = creationDate;
@@ -67,6 +70,22 @@ public class VendorForm {
 
     public void setFormRevNumber(int revNumber){
         this.revNumber = revNumber;
+    }
+
+    public String getWorkflowId(){
+        return this.workflowId;
+    }
+
+    public void setWorkflowId(String id){
+        this.workflowId = id;
+    }
+
+    public String getWorkflowName(){
+        return this.workflowName;
+    }
+
+    public void setWorkflowName(String name){
+        this.workflowName = name;
     }
 
 }

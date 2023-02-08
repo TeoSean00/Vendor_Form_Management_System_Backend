@@ -11,13 +11,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import com.smartform.backend.smartformbackend.workflow.Workflow;
+import com.smartform.backend.smartformbackend.workflow.WorkflowDAO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/form")
 public class VendorFormController {
     @Autowired
+    private MongoTemplate mongoTemplate;
     private VendorFormDAO vendorFormDAO;
+    private WorkflowDAO workflowDAO;
 
     // anything you return is automatically coverted to JS
     @GetMapping("/all")
@@ -34,13 +42,23 @@ public class VendorFormController {
         return vendorFormDAO.getVendorForm(id);
     }
 
-    // map this method to any request that is a POST at /topics
     @RequestMapping(method = RequestMethod.POST, value = "")
     @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
-    public void addForm(@RequestBody VendorForm vendorForm) {
-        // function to iterate through requestbody, based on the inputtype fill in the data
-        vendorFormDAO.insertVendorForm(vendorForm);
+    public ResponseEntity<Object> addForm(@RequestBody VendorForm vendorForm) {
+        // function to iterate through requestbody, based on the inputtype fill in the
+        // data
+        String checkId = vendorForm.getWorkflowId();
+        Workflow checkWorkflow = mongoTemplate.findById(checkId, Workflow.class);
+        if (checkWorkflow != null) {
+            vendorFormDAO.insertVendorForm(vendorForm);
+            checkWorkflow.insertForm(vendorForm.getId());
+            workflowDAO.updateWorkflow(checkId, checkWorkflow);
+            return new ResponseEntity<Object>("Form added", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("Workflow does not exist", HttpStatus.FORBIDDEN);
+        }
+
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
