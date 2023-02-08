@@ -3,6 +3,7 @@ package com.smartform.backend.smartformbackend.form;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.smartform.backend.smartformbackend.workflow.Workflow;
+import com.smartform.backend.smartformbackend.workflow.WorkflowDAO;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/form")
 public class VendorFormController {
+
     @Autowired
     private VendorFormDAO vendorFormDAO;
+
+    @Autowired
+    private WorkflowDAO workflowDAO;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     // anything you return is automatically coverted to JS
     @GetMapping("/all")
@@ -39,8 +50,13 @@ public class VendorFormController {
     @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
     public void addForm(@RequestBody VendorForm vendorForm) {
-        // function to iterate through requestbody, based on the inputtype fill in the data
-        vendorFormDAO.insertVendorForm(vendorForm);
+        String checkId = vendorForm.getWorkflowId();
+        Workflow checkWorkflow = mongoTemplate.findById(checkId, Workflow.class);
+        if (checkWorkflow != null) {
+            vendorFormDAO.insertVendorForm(vendorForm);
+            checkWorkflow.insertForm(vendorForm.getId());
+            workflowDAO.updateWorkflow(checkId, checkWorkflow);
+        }
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")

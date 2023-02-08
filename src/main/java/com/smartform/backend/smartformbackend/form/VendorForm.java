@@ -12,61 +12,72 @@ public class VendorForm {
     private String formName;
     private int formNumber;
     private int revNumber;
+    private String workflowId;
 
-    public VendorForm(String companyName, String creationDate, String formName, int formNumber, int revNumber) {
+    public VendorForm(String companyName, String creationDate, String formName, int formNumber, int revNumber,
+            String workflowId) {
         this.companyName = companyName;
         this.creationDate = creationDate;
         this.formName = formName;
         this.formNumber = formNumber;
         this.revNumber = revNumber;
+        this.workflowId = workflowId;
     }
 
-    public String getId(){
+    public String getId() {
         return this.id;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getCompanyName(){
+    public String getCompanyName() {
         return this.companyName;
     }
 
-    public void setCompanyName(String companyName){
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
-    public String getCreateDate(){
+    public String getCreateDate() {
         return this.creationDate;
     }
 
-    public void setCreateDate(String creationDate){
+    public void setCreateDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
-    public String getFormName(){
+    public String getFormName() {
         return this.formName;
     }
 
-    public void setFormName(String formName){
+    public void setFormName(String formName) {
         this.formName = formName;
     }
-    
-    public int getFormNumber(){
+
+    public int getFormNumber() {
         return this.formNumber;
     }
 
-    public void setFormNumber(int formNumber){
+    public void setFormNumber(int formNumber) {
         this.formNumber = formNumber;
     }
 
-    public int getFormRevNumber(){
+    public int getFormRevNumber() {
         return this.revNumber;
     }
 
-    public void setFormRevNumber(int revNumber){
+    public void setFormRevNumber(int revNumber) {
         this.revNumber = revNumber;
+    }
+
+    public String getWorkflowId() {
+        return this.workflowId;
+    }
+
+    public void setWorkflowId(String id) {
+        this.workflowId = id;
     }
 
 }
