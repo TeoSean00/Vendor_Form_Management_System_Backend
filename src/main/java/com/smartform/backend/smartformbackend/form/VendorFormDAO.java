@@ -1,6 +1,5 @@
 package com.smartform.backend.smartformbackend.form;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class VendorFormDAO {
         mongoTemplate.remove(deleteObject);
     }
 
-    public VendorForm getVendorForm(final String topicId) {
-        return mongoTemplate.findById(topicId, VendorForm.class);
+    public VendorForm getVendorForm(final String formId) {
+        return mongoTemplate.findById(formId, VendorForm.class);
     }
 }

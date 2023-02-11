@@ -1,0 +1,15 @@
+{
+"details" :
+    {
+        "0": {"order": 1, "label": "Company’s Name", "input": "Shady Incorporated", "type": "text"},
+        "1": {"order": 2, "label": "Company’s Registration No", "input": "1234567890", "type": "text"},
+        "2": {"order": 3, "label": "GST Registered (Yes/No)", "input": "Yes I think so ", "type": "text"},
+        "3": {"order": 4, "label": "Office Address", "input": "Marketplace Facebook", "type": "text"},
+        "4": {"order": 5, "label": "Tel", "input": "0987654321", "type": "text"},
+        "5": {"order": 6, "label": "Fax", "input": "1234567890", "type": "text"},
+        "6": {"order": 7, "label": "Type of Business", "input": "Shady Business", "type": "text"},
+        "7": {"order": 8, "label": "Contact Person", "input": "Shady Person", "type": "text"},
+        "8": {"order": 9, "label": "Nature of Business", "input": "Shady", "type": "text"},
+        "9": {"order": 10, "label": "Product/Services", "input": "Shady Product", "type": "text"}
+    }
+}
