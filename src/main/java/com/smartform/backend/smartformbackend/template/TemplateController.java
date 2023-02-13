@@ -31,7 +31,7 @@ public class TemplateController {
         return templateDAO.getTemplate(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "")
+    @RequestMapping(method = RequestMethod.POST, value = "/")
     @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
     public void addTemplate(@RequestBody Template template) {
