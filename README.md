@@ -19,7 +19,8 @@ Create the springboot jar file <br />
 ```mvn -DskipTests package``` <br />
 
 Build the springboot image <br />
-```docker image build -t smartform .```
+```docker image build -t smartform .``` <br />
+```docker build --platform linux/x86_64``` <br /> for M1 Mac
 
 Run the two containers from docker-compose.yaml <br />
 ```docker-compose up```
