@@ -15,8 +15,11 @@ To install project packages with maven <br />
 Pull the mongo image <br />
 ```docker pull mongo: latest (automatically pulls latest version)```<br />
 
+Create the springboot jar file <br />
+```mvn -DskipTests package``` <br />
+
 Build the springboot image <br />
 ```docker image build -t smartform .```
 
-Run the two containers from docker-compose.yaml
+Run the two containers from docker-compose.yaml <br />
 ```docker-compose up```
