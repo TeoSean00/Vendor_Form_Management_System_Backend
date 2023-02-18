@@ -12,16 +12,16 @@ public class VendorForm {
     private String formName;
     private int formNumber;
     private int revNumber;
-    private String workflowId;
+    private String vendorId;
 
     public VendorForm(String companyName, String creationDate, String formName, int formNumber, int revNumber,
-            String workflowId) {
+            String vendorId) {
         this.companyName = companyName;
         this.creationDate = creationDate;
         this.formName = formName;
         this.formNumber = formNumber;
         this.revNumber = revNumber;
-        this.workflowId = workflowId;
+        this.vendorId = vendorId;
     }
 
     public String getId() {
@@ -72,12 +72,12 @@ public class VendorForm {
         this.revNumber = revNumber;
     }
 
-    public String getWorkflowId() {
-        return this.workflowId;
+    public String getVendorId() {
+        return this.vendorId;
     }
 
-    public void setWorkflowId(String id) {
-        this.workflowId = id;
+    public void setVendorId(String id) {
+        this.vendorId = id;
     }
 
 }

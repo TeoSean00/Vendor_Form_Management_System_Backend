@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.smartform.backend.smartformbackend.workflow.Workflow;
-import com.smartform.backend.smartformbackend.workflow.WorkflowDAO;
+import com.smartform.backend.smartformbackend.vendor.Vendor;
+import com.smartform.backend.smartformbackend.vendor.VendorDAO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -25,7 +25,7 @@ public class VendorFormController {
     private VendorFormDAO vendorFormDAO;
 
     @Autowired
-    private WorkflowDAO workflowDAO;
+    private VendorDAO vendorDAO;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -50,12 +50,12 @@ public class VendorFormController {
     @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
     public void addForm(@RequestBody VendorForm vendorForm) {
-        String checkId = vendorForm.getWorkflowId();
-        Workflow checkWorkflow = mongoTemplate.findById(checkId, Workflow.class);
+        String checkId = vendorForm.getVendorId();
+        Vendor checkWorkflow = mongoTemplate.findById(checkId, Vendor.class);
         if (checkWorkflow != null) {
             vendorFormDAO.insertVendorForm(vendorForm);
             checkWorkflow.insertForm(vendorForm.getId());
-            workflowDAO.updateWorkflow(checkId, checkWorkflow);
+            vendorDAO.updateVendor(checkId, checkWorkflow);
         }
     }
 

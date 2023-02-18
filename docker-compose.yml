@@ -1,0 +1,15 @@
+version: "3"
+services:
+  smartformmongodb:
+    image: mongo:latest
+    container_name: "smartformmongodb"
+    ports:
+      - 27017:27017
+
+  smartform:
+    image: smartform
+    container_name: smartform
+    ports:
+      - 8080:8080
+    links:
+      - smartformmongodb

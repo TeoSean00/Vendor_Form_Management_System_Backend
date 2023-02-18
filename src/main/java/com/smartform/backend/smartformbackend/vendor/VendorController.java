@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.workflow;
+package com.smartform.backend.smartformbackend.vendor;
 
 import java.util.List;
 
@@ -14,41 +14,41 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/workflow")
-public class WorkflowController {
+@RequestMapping("/api/vendor")
+public class VendorController {
     @Autowired
-    private WorkflowDAO workflowDAO;
+    private VendorDAO vendorDAO;
 
     // anything you return is automatically coverted to JS
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Workflow> getAllWorkflows() {
-        return workflowDAO.findAll();
+    public List<Vendor> getAllVendors() {
+        return vendorDAO.findAll();
     }
 
     // need to tell spring to send the id to the method
     @RequestMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Workflow getWorkflow(@PathVariable String id) {
-        return workflowDAO.getWorkflow(id);
+    public Vendor getVendor(@PathVariable String id) {
+        return vendorDAO.getVendor(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
     @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
-    public void addWorkflow(@RequestBody Workflow workflow) {
-        workflowDAO.insertWorkflow(workflow);
+    public void addVendor(@RequestBody Vendor vendor) {
+        vendorDAO.insertVendor(vendor);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateWorkflow(@RequestBody Workflow workflow, @PathVariable String id) {
-        workflowDAO.updateWorkflow(id, workflow);
+    public void updateVendor(@RequestBody Vendor vendor, @PathVariable String id) {
+        vendorDAO.updateVendor(id, vendor);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteWorkflow(@PathVariable String id) {
-        workflowDAO.deleteWorkflow(id);
+    public void deleteVendor(@PathVariable String id) {
+        vendorDAO.deleteVendor(id);
     }
 }

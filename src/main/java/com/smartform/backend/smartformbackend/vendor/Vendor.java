@@ -1,4 +1,4 @@
-package com.smartform.backend.smartformbackend.workflow;
+package com.smartform.backend.smartformbackend.vendor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +11,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.smartform.backend.smartformbackend.auth.User;
 import com.smartform.backend.smartformbackend.form.VendorForm;
 
-@Document(collection = "workflows")
-public class Workflow {
+@Document(collection = "vendors")
+public class Vendor {
     @Id
     private String id;
     private String name;
     private List<String> users = new ArrayList<String>();
     private List<String> forms = new ArrayList<String>();
 
-    public Workflow() {
+    public Vendor() {
 
     }
 
-    public Workflow(String name) {
+    public Vendor(String name) {
         this.name = name;
     }
 
@@ -68,13 +68,5 @@ public class Workflow {
 
     public void insertForm(String formId) {
         this.forms.add(formId);
-    }
-
-    public void removeForm() {
-
-    }
-
-    public void assignForm() {
-
     }
 }
