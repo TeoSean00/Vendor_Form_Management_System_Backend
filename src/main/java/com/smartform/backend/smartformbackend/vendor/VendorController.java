@@ -33,7 +33,7 @@ public class VendorController {
         return vendorDAO.getVendor(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "")
+    @RequestMapping(method = RequestMethod.POST, value = "/")
     @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
     public void addVendor(@RequestBody Vendor vendor) {
