@@ -20,7 +20,7 @@ Create the springboot jar file <br />
 
 Build the springboot image <br />
 ```docker image build -t smartform .``` <br />
-```docker build --platform linux/x86_64``` <br /> for M1 Mac
+```docker build --platform linux/x86_64 -t smartform .``` <br /> for M1 Mac
 
 Run the two containers from docker-compose.yaml <br />
 ```docker-compose up```
