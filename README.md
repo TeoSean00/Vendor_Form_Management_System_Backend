@@ -10,14 +10,17 @@ https://www.baeldung.com/install-maven-on-windows-linux-mac
 To install project packages with maven <br />
 ```mvn clean install```
 
-To run springboot on local server <br />
-```mvn spring-boot:run```
-
 ### Run mongodb image on docker <br />
 
 Pull the mongo image <br />
-```docker pull mongo (automatically pulls latest version)```<br />
+```docker pull mongo: latest (automatically pulls latest version)```<br />
 
-```docker run --name mongodb -d -p 27017:27017 mongo```
+Create the springboot jar file <br />
+```mvn -DskipTests package``` <br />
 
+Build the springboot image <br />
+```docker image build -t smartform .``` <br />
+```docker build --platform linux/x86_64 -t smartform .``` <br /> for M1 Mac
 
+Run the two containers from docker-compose.yaml <br />
+```docker-compose up```
