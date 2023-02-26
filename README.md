@@ -24,3 +24,5 @@ Build the springboot image <br />
 
 Run the two containers from docker-compose.yaml <br />
 ```docker-compose up```
+
+Remember to signup your own account through postman to access springboot through your frontend!
