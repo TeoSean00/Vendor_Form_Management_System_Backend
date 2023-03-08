@@ -12,16 +12,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class Template {
     @Id
     private String id;
-    private String status;
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
     private Map<String, Object> details;
 
     @JsonCreator
