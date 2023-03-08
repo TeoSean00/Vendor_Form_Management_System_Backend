@@ -1,5 +1,7 @@
 package com.smartform.backend.smartformbackend.form;
 
+import java.util.Map;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,21 +9,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class VendorForm {
     @Id
     private String id;
-    private String companyName;
+    private String vendorName;
     private String creationDate;
-    private String formName;
-    private int formNumber;
-    private int revNumber;
     private String vendorId;
+    private Map<String, Object> content;
 
-    public VendorForm(String companyName, String creationDate, String formName, int formNumber, int revNumber,
+    public VendorForm(String vendorName, String creationDate, Map<String, Object> content,
             String vendorId) {
-        this.companyName = companyName;
+        this.vendorName = vendorName;
         this.creationDate = creationDate;
-        this.formName = formName;
-        this.formNumber = formNumber;
-        this.revNumber = revNumber;
         this.vendorId = vendorId;
+        this.content = content;
+    }
+
+    public Map<String, Object> getContent() {
+        return content;
+    }
+
+    public void setContent(Map<String, Object> content) {
+        this.content = content;
     }
 
     public String getId() {
@@ -32,12 +38,12 @@ public class VendorForm {
         this.id = id;
     }
 
-    public String getCompanyName() {
-        return this.companyName;
+    public String getVendorName() {
+        return this.vendorName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void getVendorName(String vendorName) {
+        this.vendorName = vendorName;
     }
 
     public String getCreateDate() {
@@ -46,30 +52,6 @@ public class VendorForm {
 
     public void setCreateDate(String creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public String getFormName() {
-        return this.formName;
-    }
-
-    public void setFormName(String formName) {
-        this.formName = formName;
-    }
-
-    public int getFormNumber() {
-        return this.formNumber;
-    }
-
-    public void setFormNumber(int formNumber) {
-        this.formNumber = formNumber;
-    }
-
-    public int getFormRevNumber() {
-        return this.revNumber;
-    }
-
-    public void setFormRevNumber(int revNumber) {
-        this.revNumber = revNumber;
     }
 
     public String getVendorId() {

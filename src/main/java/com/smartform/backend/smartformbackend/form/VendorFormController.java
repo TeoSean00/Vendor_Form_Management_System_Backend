@@ -51,11 +51,11 @@ public class VendorFormController {
     // getting the the request payload
     public void addForm(@RequestBody VendorForm vendorForm) {
         String checkId = vendorForm.getVendorId();
-        Vendor checkWorkflow = mongoTemplate.findById(checkId, Vendor.class);
-        if (checkWorkflow != null) {
+        Vendor checkVendor = mongoTemplate.findById(checkId, Vendor.class);
+        if (checkVendor != null) {
             vendorFormDAO.insertVendorForm(vendorForm);
-            checkWorkflow.insertForm(vendorForm.getId());
-            vendorDAO.updateVendor(checkId, checkWorkflow);
+            checkVendor.insertForm(vendorForm.getId());
+            vendorDAO.updateVendor(checkId, checkVendor);
         }
     }
 
