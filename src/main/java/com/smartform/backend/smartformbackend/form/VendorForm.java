@@ -5,15 +5,19 @@ import java.util.Map;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 @Document(collection = "forms")
 public class VendorForm {
     @Id
     private String id;
+
     private String vendorName;
     private String creationDate;
     private String vendorId;
     private Map<String, Object> content;
 
+    @JsonCreator
     public VendorForm(String vendorName, String creationDate, Map<String, Object> content,
             String vendorId) {
         this.vendorName = vendorName;
