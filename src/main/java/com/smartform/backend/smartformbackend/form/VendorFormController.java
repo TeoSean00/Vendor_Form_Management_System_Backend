@@ -46,16 +46,18 @@ public class VendorFormController {
     }
 
     // map this method to any request that is a POST at /topics
-    @RequestMapping(method = RequestMethod.POST, value = "")
+    @RequestMapping(method = RequestMethod.POST, value = "/")
     @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
     public void addForm(@RequestBody VendorForm vendorForm) {
         String checkId = vendorForm.getVendorId();
-        Vendor checkWorkflow = mongoTemplate.findById(checkId, Vendor.class);
-        if (checkWorkflow != null) {
+        System.out.println(checkId + "CHECK ID IS HERE");
+        vendorForm.setStatus("vendor_response");
+        Vendor checkVendor = mongoTemplate.findById(checkId, Vendor.class);
+        if (checkVendor != null) {
             vendorFormDAO.insertVendorForm(vendorForm);
-            checkWorkflow.insertForm(vendorForm.getId());
-            vendorDAO.updateVendor(checkId, checkWorkflow);
+            checkVendor.insertForm(vendorForm.getId());
+            vendorDAO.updateVendor(checkId, checkVendor);
         }
     }
 

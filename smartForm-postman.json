@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "1897695c-9607-4a9a-bc43-c93f16c8407e",
+		"name": "SmartForm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/api/template/",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2pvIiwiaWF0IjoxNjc3ODE2MTUwLCJleHAiOjE2Nzc5MDI1NTB9.qQ84opWxBMiO7vPzn6yOM4E_zPNTOMV-e6XHTv0oET9tM1XlfKDvxuIpankurAKbzswfAJu_agXKDVErbcYpkQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"details\": {\r\n\t\t\"templateInfo\": {\r\n\t\t\t\"templateName\": \"New Vendor Assessment Form\",\r\n\t\t\t\"assignedTo\": \"Vendor\",\r\n\t\t\t\"templateDesc\": \"Assessment for new vendors\"\r\n\t\t},\r\n\t\t\"templateContents\": [{\r\n\t\t\t\t\"Vendor\": [{\r\n\t\t\t\t\t\t\"type\": \"header\",\r\n\t\t\t\t\t\t\"order\": 0,\r\n\t\t\t\t\t\t\"text\": \"NEW VENDOR ASSESSMENT FORM\",\r\n\t\t\t\t\t\t\"style\": \"h1\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 1,\r\n\t\t\t\t\t\t\"text\": \"Company's Name\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"number\",\r\n\t\t\t\t\t\t\"order\": 2,\r\n\t\t\t\t\t\t\"text\": \"Company Registration No:\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 3,\r\n\t\t\t\t\t\t\"text\": \"Office Address\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 4,\r\n\t\t\t\t\t\t\"text\": \"GST Registered\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"number\",\r\n\t\t\t\t\t\t\"order\": 5,\r\n\t\t\t\t\t\t\"text\": \"Tel\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 6,\r\n\t\t\t\t\t\t\"text\": \"Fax\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"checkbox\",\r\n\t\t\t\t\t\t\"order\": 7,\r\n\t\t\t\t\t\t\"text\": \"Type of business License/Registration\",\r\n\t\t\t\t\t\t\"options\": [\r\n\t\t\t\t\t\t\t\"Sole Proprietorship\",\r\n\t\t\t\t\t\t\t\"Limited Company\",\r\n\t\t\t\t\t\t\t\"Partnership Agreement\",\r\n\t\t\t\t\t\t\t\"Others\"\r\n\t\t\t\t\t\t]\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"header\",\r\n\t\t\t\t\t\t\"order\": 0,\r\n\t\t\t\t\t\t\"text\": \"Contact Person\",\r\n\t\t\t\t\t\t\"style\": \"h1\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 8,\r\n\t\t\t\t\t\t\"text\": \"Contact Name\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"number\",\r\n\t\t\t\t\t\t\"order\": 9,\r\n\t\t\t\t\t\t\"text\": \"Contact Tel\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 10,\r\n\t\t\t\t\t\t\"text\": \"Contact Designation\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"checkbox\",\r\n\t\t\t\t\t\t\"order\": 11,\r\n\t\t\t\t\t\t\"text\": \"Nature of Business\",\r\n\t\t\t\t\t\t\"options\": [\r\n\t\t\t\t\t\t\t\"Manufacturing\",\r\n\t\t\t\t\t\t\t\"Agent/dealer\",\r\n\t\t\t\t\t\t\t\"Distributor\",\r\n\t\t\t\t\t\t\t\"Others\"\r\n\t\t\t\t\t\t]\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 12,\r\n\t\t\t\t\t\t\"text\": \"If you picked Others please specify the nature of your business\"\r\n\t\t\t\t\t}\r\n\t\t\t\t]\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Admin\": [{\r\n\t\t\t\t\t\t\"type\": \"header\",\r\n\t\t\t\t\t\t\"order\": 0,\r\n\t\t\t\t\t\t\"text\": \"NEW VENDOR ASSESSMENT FORM\",\r\n\t\t\t\t\t\t\"style\": \"h1\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 2,\r\n\t\t\t\t\t\t\"text\": \"ISO 9001 Certification\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 3,\r\n\t\t\t\t\t\t\"text\": \"Certification Body\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 4,\r\n\t\t\t\t\t\t\"text\": \"Accreditation of Laboratory\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 5,\r\n\t\t\t\t\t\t\"text\": \"Accreditation Body\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 6,\r\n\t\t\t\t\t\t\"text\": \"Product Certification\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 7,\r\n\t\t\t\t\t\t\"text\": \"Product Markings (e.g. PSB, UL, TUV)\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 8,\r\n\t\t\t\t\t\t\"text\": \"Site Evaluation Results\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"checkbox\",\r\n\t\t\t\t\t\t\"order\": 9,\r\n\t\t\t\t\t\t\"text\": \"Site Evaluation Results\",\r\n\t\t\t\t\t\t\"options\": [\"Satisfactory\", \"Unsatisfactory\"]\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 10,\r\n\t\t\t\t\t\t\"text\": \"Results of Samples/Product Evaluation\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"checkbox\",\r\n\t\t\t\t\t\t\"order\": 11,\r\n\t\t\t\t\t\t\"text\": \"Results of Samples/Product Evaluation\",\r\n\t\t\t\t\t\t\"options\": [\"Satisfactory\", \"Unsatisfactory\"]\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 12,\r\n\t\t\t\t\t\t\"text\": \"Results of First Deal\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"checkbox\",\r\n\t\t\t\t\t\t\"order\": 13,\r\n\t\t\t\t\t\t\"text\": \"Results of First Deal\",\r\n\t\t\t\t\t\t\"options\": [\"Satisfactory\", \"Unsatisfactory\"]\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 14,\r\n\t\t\t\t\t\t\"text\": \"Track Record Review/ Customer Reference\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"checkbox\",\r\n\t\t\t\t\t\t\"order\": 15,\r\n\t\t\t\t\t\t\"text\": \"Track Record Review/ Customer Reference\",\r\n\t\t\t\t\t\t\"options\": [\"Satisfactory\", \"Unsatisfactory\"]\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"boolean\",\r\n\t\t\t\t\t\t\"order\": 16,\r\n\t\t\t\t\t\t\"text\": \"Other Evaluation\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"type\": \"text\",\r\n\t\t\t\t\t\t\"order\": 17,\r\n\t\t\t\t\t\t\"text\": \"Specify: Product Markings (e.g. PSB, UL, TUV)\"\r\n\t\t\t\t\t}\r\n\t\t\t\t]\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/template/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"template",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/auth/signin",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2pvIiwiaWF0IjoxNjc3ODE2MTUwLCJleHAiOjE2Nzc5MDI1NTB9.qQ84opWxBMiO7vPzn6yOM4E_zPNTOMV-e6XHTv0oET9tM1XlfKDvxuIpankurAKbzswfAJu_agXKDVErbcYpkQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"jojo\",\r\n    \"password\":\"12345678\"\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/vendor/",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2pvIiwiaWF0IjoxNjc3ODE2MTUwLCJleHAiOjE2Nzc5MDI1NTB9.qQ84opWxBMiO7vPzn6yOM4E_zPNTOMV-e6XHTv0oET9tM1XlfKDvxuIpankurAKbzswfAJu_agXKDVErbcYpkQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"bigBear\",\r\n    \"users\" : [],\r\n    \"forms\" : []\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/vendor/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vendor",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
