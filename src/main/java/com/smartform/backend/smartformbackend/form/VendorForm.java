@@ -11,19 +11,37 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class VendorForm {
     @Id
     private String id;
-
+    private String status;
+    private String deadline;
     private String vendorName;
     private String creationDate;
     private String vendorId;
     private Map<String, Object> content;
 
     @JsonCreator
-    public VendorForm(String vendorName, String creationDate, Map<String, Object> content,
+    public VendorForm(String vendorName, String creationDate, Map<String, Object> content, String deadline,
             String vendorId) {
         this.vendorName = vendorName;
         this.creationDate = creationDate;
         this.vendorId = vendorId;
         this.content = content;
+        this.deadline = deadline;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Map<String, Object> getContent() {

@@ -52,6 +52,7 @@ public class VendorFormController {
     public void addForm(@RequestBody VendorForm vendorForm) {
         String checkId = vendorForm.getVendorId();
         System.out.println(checkId + "CHECK ID IS HERE");
+        vendorForm.setStatus("vendor_response");
         Vendor checkVendor = mongoTemplate.findById(checkId, Vendor.class);
         if (checkVendor != null) {
             vendorFormDAO.insertVendorForm(vendorForm);
