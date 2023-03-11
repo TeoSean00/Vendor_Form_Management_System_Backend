@@ -9,13 +9,24 @@ public class JwtResponse {
 	private String username;
 	private String email;
 	private List<String> roles;
+	private String vendorId;
 
-	public JwtResponse(String accessToken, String id, String username, String email, List<String> roles) {
+	public JwtResponse(String accessToken, String id, String username, String email, List<String> roles,
+			String vendorId) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+		this.vendorId = vendorId;
+	}
+
+	public String getVendorId() {
+		return vendorId;
+	}
+
+	public void setVendorId(String vendorId) {
+		this.vendorId = vendorId;
 	}
 
 	public String getAccessToken() {
