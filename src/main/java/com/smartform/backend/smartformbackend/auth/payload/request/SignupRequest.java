@@ -20,12 +20,22 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
+    private String vendorId;
+
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getVendorId() {
+        return vendorId;
+    }
+
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
     }
 
     public String getEmail() {
@@ -51,4 +61,5 @@ public class SignupRequest {
     public void setRole(Set<String> roles) {
         this.roles = roles;
     }
+
 }
