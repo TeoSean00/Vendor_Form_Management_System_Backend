@@ -63,8 +63,8 @@ public class VendorFormController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateForm(@RequestBody VendorForm workflow, @PathVariable String id) {
-        vendorFormDAO.updateVendorForm(id, workflow);
+    public void updateForm(@RequestBody VendorForm form, @PathVariable String id) {
+        vendorFormDAO.updateVendorForm(id, form);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
