@@ -1,6 +1,7 @@
 package com.smartform.backend.smartformbackend.form;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.smartform.backend.smartformbackend.pdfgenerator.PDFGeneratorLayer;
 import com.smartform.backend.smartformbackend.vendor.Vendor;
 import com.smartform.backend.smartformbackend.vendor.VendorDAO;
 
@@ -71,5 +73,15 @@ public class VendorFormController {
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteForm(@PathVariable String id) {
         vendorFormDAO.deleteWorkflow(id);
+    }
+
+    @RequestMapping("generateForm/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void generatePdf(@PathVariable String id) {
+        PDFGeneratorLayer pdfGenerator = new PDFGeneratorLayer();
+        VendorForm form = vendorFormDAO.getVendorForm(id);
+        Map<String, Object> content = form.getContent();
+        // HashMap<String, Object> formContent = content.getFormContent();
+        // pdfGenerator.generatePdf(formContent);
     }
 }
