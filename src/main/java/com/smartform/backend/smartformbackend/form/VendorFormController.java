@@ -91,6 +91,13 @@ public class VendorFormController {
                 System.out.println("This is FormContent");
                 ArrayList<Map<String, Object>> sectionContent = (ArrayList<Map<String, Object>>) entry.getValue();
                 pdfGenerator.generatePdf(sectionContent);
+
+
+
+
+
+
+                
                 // for (Map<String, Object> item : sectionContent) {
                 // System.out.println(item);
                 // for (Map.Entry<String, Object> rowContent : item.entrySet()) {

@@ -91,7 +91,7 @@ public class JsonToWord {
             WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateInputStream);
             MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
             // Replace this name later
-            String outputfilepath = "generated/test.pdf";
+            String outputfilepath = "test.pdf";
             FileOutputStream os = new FileOutputStream(outputfilepath);
             Docx4J.toPDF(wordMLPackage, os);
             os.flush();
