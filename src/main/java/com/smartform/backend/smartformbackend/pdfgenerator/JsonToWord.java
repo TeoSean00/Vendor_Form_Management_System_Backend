@@ -35,7 +35,7 @@ public class JsonToWord {
         // String filePath = "generated/test2.docx";
         // json2word.createDocument(filePath);
         // json2word.writeLine("Testing this line!");
-        // json2word.createHeader();
+        // json2word.createHeader(Object input);
         // json2word.createTextInput();
         // json2word.createBoolean();
         // json2word.createLikertGroup();
@@ -56,7 +56,7 @@ public class JsonToWord {
         // ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>();
         // table.add(row1);
         // table.add(row2);
-        // json2word.drawTable(table);
+        // // json2word.drawTable(table);
         // json2word.saveDocument();
     }
 

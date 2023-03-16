@@ -5,6 +5,10 @@ import java.util.HashMap;
 
 public class PDFGeneratorLayer {
     public static void main(String[] args) {
+        //Springboot endpoint takes in the big json
+        //Call this function
+        //Provide a download link // Preview -> Open pdf in new tab
+        //Form
         String filePath = "generated/form.docx"; // Preset name
         JsonToWord json2word = new JsonToWord();
         json2word.createDocument(filePath);
