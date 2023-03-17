@@ -67,6 +67,100 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.14.2</version>
 		</dependency>
+
+		<!-- Dependencies for JSON to Word below -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		  </dependency>
+		  <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		  <dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.20.0</version>
+		  </dependency>
+		  <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+		  <dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.20.0</version>
+		  </dependency>
+		  <!-- https://mvnrepository.com/artifact/org.json/json -->
+	  <dependency>
+		  <groupId>org.json</groupId>
+		  <artifactId>json</artifactId>
+		  <version>20230227</version>
+	  </dependency>
+	  
+	  
+		  <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		  <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.2.3</version>
+		  </dependency>
+		  <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		  <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.3</version>
+		  </dependency>
+		  <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+		  <dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>3.0.0-RC1</version>
+		  </dependency>
+		  <!-- https://mvnrepository.com/artifact/org.docx4j/docx4j -->
+		  <dependency>
+			<groupId>org.docx4j</groupId>
+			<artifactId>docx4j</artifactId>
+			<version>6.1.2</version>
+		  </dependency>
+		  <!-- API -->
+	  <dependency>
+		<groupId>jakarta.xml.bind</groupId>
+		<artifactId>jakarta.xml.bind-api</artifactId>
+		<version>2.3.3</version>
+	  </dependency>
+	  
+	  <!-- Runtime -->
+	  <dependency>
+		<groupId>com.sun.xml.bind</groupId>
+		<artifactId>jaxb-impl</artifactId>
+		<version>2.3.3</version>
+		<scope>runtime</scope>
+	  </dependency>
+	  
+	  <!-- Alternative runtime -->
+	  <dependency>
+		<groupId>org.glassfish.jaxb</groupId>
+		<artifactId>jaxb-runtime</artifactId>
+		<version>2.3.3</version>
+		<scope>runtime</scope>
+	  </dependency>
+	  <dependency>
+		<groupId>org.docx4j</groupId>
+		<artifactId>docx4j-JAXB-Internal</artifactId>
+		<version>8.0.0</version>
+	  </dependency>
+	  <dependency>
+		<groupId>org.docx4j</groupId>
+		<artifactId>docx4j-JAXB-ReferenceImpl</artifactId>
+		<version>8.0.0</version>
+	  </dependency>
+	  <dependency>
+		<groupId>org.docx4j</groupId>
+		<artifactId>docx4j-JAXB-MOXy</artifactId>
+		<version>8.0.0</version>
+	  </dependency>
+	  <dependency>
+		<groupId>org.docx4j</groupId>
+		<artifactId>docx4j-export-fo</artifactId>
+		<version>8.0.0</version>
+	  </dependency>
 	</dependencies>
 
 	<build>

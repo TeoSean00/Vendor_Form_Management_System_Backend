@@ -32,13 +32,24 @@ public class User {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
+    private String vendorId;
+
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, String vendorId) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.vendorId = vendorId;
+    }
+
+    public String getVendorId() {
+        return vendorId;
+    }
+
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
     }
 
     public String getId() {
