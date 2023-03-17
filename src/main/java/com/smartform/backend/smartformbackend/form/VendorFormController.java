@@ -85,7 +85,7 @@ public class VendorFormController {
         String json;
         try {
             json = new ObjectMapper().writeValueAsString(form.getContent());
-            JSONObject jsonObj = new JSONObject(json);S
+            JSONObject jsonObj = new JSONObject(json);
             pdfGenerator.generatePdf(jsonObj);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
