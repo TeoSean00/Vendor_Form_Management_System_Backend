@@ -19,6 +19,8 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.docx4j.Docx4J;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHMerge;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
@@ -116,7 +118,7 @@ public class JsonToWord {
      * .get(key) methods.
      * Create text input can take in and create text, date and numeric inputs.
      */
-    public void createTextInput(Map<String, Object> input) {
+    public void createTextInput(JSONObject input) {
         // HashMap<String, Object> textInput = new HashMap<String, Object>() {{
         // put("order", 2);
         // put("label", "Please enter your name:");
@@ -142,7 +144,7 @@ public class JsonToWord {
      * .get(key) methods.
      * Creates bold and different size headers based on style.
      */
-    public void createHeader(Map<String, Object> input) {
+    public void createHeader(JSONObject input) {
         // HashMap<String, Object> headerInput = new HashMap<String, Object>() {{
         // put("order", 1);
         // put("label", "Header Name Here");
@@ -166,7 +168,7 @@ public class JsonToWord {
      * .get(key) methods.
      * Creates a boolean question with YES / NO options at the right.
      */
-    public void createBoolean(Map<String, Object> input) {
+    public void createBoolean(JSONObject input) {
         // HashMap<String, Object> booleanInput = new HashMap<String, Object>() {{
         // List<String> options = new ArrayList<>();
         // options.add("Yes");
@@ -192,7 +194,7 @@ public class JsonToWord {
      * .get(key) methods.
      * Creates a radio group
      */
-    public void createRadioGroup(Map<String, Object> input) {
+    public void createRadioGroup(JSONObject input) {
         // HashMap<String, Object> radioInput = new HashMap<String, Object>() {{
         // List<String> options = new ArrayList<>();
         // options.add("a. Sole proprietorship");
@@ -209,8 +211,8 @@ public class JsonToWord {
         XWPFRun run = paragraph.createRun();
         run.addBreak();
         run.setText((String) input.get("label"));
-        ArrayList<String> options = (ArrayList<String>) input.get("options");
-        for (int i = 0; i < options.size(); i++) {
+        JSONArray options = (JSONArray) input.get("options");
+        for (int i = 0; i < options.length(); i++) {
             XWPFRun optionRun = doc.createParagraph().createRun();
             optionRun.addTab();
             optionRun.setText(options.get(i) + " [ ]");
@@ -225,7 +227,7 @@ public class JsonToWord {
      * .get(key) methods.
      * Creates a likert group from 1 to 5.
      */
-    public void createLikertGroup(Map<String, Object> input) {
+    public void createLikertGroup(JSONObject input) {
         // HashMap<String, Object> likertInput = new HashMap<String, Object>() {{
         // List<String> options = new ArrayList<>();
         // options.add("Attendance in Safety Meeting");
@@ -236,8 +238,8 @@ public class JsonToWord {
         // put("type", "likertGroup");
         // }};
         // Tables are always 6 columns, number of options + 3
-        ArrayList<String> options = (ArrayList<String>) input.get("options");
-        int noOfOptions = options.size();
+        JSONArray options = (JSONArray) input.get("options");
+        int noOfOptions = options.length();
         doc.createParagraph();
         XWPFTable table = doc.createTable(noOfOptions + 4, 6);
         // Set header
@@ -271,8 +273,8 @@ public class JsonToWord {
             table.getRow(noOfOptions + 3).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
         }
         // Filling in options
-        for (int i = 0; i < options.size(); i++) {
-            table.getRow(3 + i).getCell(0).setText(options.get(i));
+        for (int i = 0; i < options.length(); i++) {
+            table.getRow(3 + i).getCell(0).setText(options.getString(i));
         }
     }
 

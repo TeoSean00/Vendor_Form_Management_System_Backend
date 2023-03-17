@@ -23,7 +23,24 @@ public class PDFGeneratorLayer {
             JSONArray sectionArray = sectionInfo.getJSONArray(key);
             for (int i2=0; i2 <sectionArray.length(); i2++){
                 JSONObject questionObj = sectionArray.getJSONObject(i2);
-                System.out.println(questionObj);
+                // System.out.println(questionObj);
+                System.out.println(questionObj.get("type"));
+                // Currently missing header section, signature, radio group
+
+                if (questionObj.get("type").equals("header")) {
+                    json2word.createHeader(questionObj);
+                } else if (questionObj.get("type").equals("text") ||
+                        questionObj.get("type").equals("date") ||
+                        questionObj.get("type").equals("number")) {
+                    json2word.createTextInput(questionObj);
+                } else if (questionObj.get("type").equals("boolean")) {
+                    json2word.createBoolean(questionObj);
+                } else if (questionObj.get("type").equals("checkbox")) {
+                    json2word.createRadioGroup(questionObj);
+                } else if (questionObj.get("type").equals("likertGroup")) {
+                    json2word.createLikertGroup(questionObj);
+                }
+
             }
 
         }
