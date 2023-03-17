@@ -1,10 +1,8 @@
 package com.smartform.backend.smartformbackend.form;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartform.backend.smartformbackend.pdfgenerator.PDFGeneratorLayer;
 import com.smartform.backend.smartformbackend.vendor.Vendor;
 import com.smartform.backend.smartformbackend.vendor.VendorDAO;
@@ -82,15 +82,37 @@ public class VendorFormController {
     public void generatePdf(@PathVariable String id) {
         PDFGeneratorLayer pdfGenerator = new PDFGeneratorLayer();
         VendorForm form = vendorFormDAO.getVendorForm(id);
-        Map<String, Object> content = form.getContent();
-        for (Map.Entry<String, Object> entry : content.entrySet()) {
-            System.out.println(entry.getKey() + "/" + entry.getValue());
-            if (entry.getKey().equals("FormInfo")) {
-                System.out.println("This is form info!");
-            } else if (entry.getKey().equals("FormContent")) {
-                System.out.println("This is FormContent");
-                ArrayList<Map<String, Object>> sectionContent = (ArrayList<Map<String, Object>>) entry.getValue();
-                pdfGenerator.generatePdf(sectionContent);
+        String json;
+        try {
+            json = new ObjectMapper().writeValueAsString(form.getContent());
+            JSONObject jsonObj = new JSONObject(json);S
+            pdfGenerator.generatePdf(jsonObj);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // System.out.println(content.get("FormInfo"));
+        // JSONArray formContent = content.get("FormContent");
+        
+        // for (Map.Entry<String, Object> entry : content.entrySet()) {
+        //     System.out.println(entry.getKey() + "/" + entry.getValue());
+        //     if (entry.getKey().equals("FormInfo")) {
+        //         System.out.println("This is form info!");
+        //     } else if (entry.getKey().equals("FormContent")) {
+        //         System.out.println("This is FormContent");
+        //         System.out.println(entry.getValue().getClass());
+        //         // System.out.println(entry.getValue());
+        //         String key = entry.getKey();
+        //         String value = (String) entry.getValue();
+        //         ObjectMapper objMapper = new ObjectMapper();
+        //         JSONObject jsonObject = objMapper.readValue(value);
+        //         System.out.println("Value fking is");
+        //         System.out.println(value);
+        //         }
+                // String sectionContent = (String) entry.getValue();
+                // ArrayList<Map<String, Object>> sectionContent = (ArrayList<Map<String, Object>>) entry.getValue();
+                
+                // pdfGenerator.generatePdf(entry.getValue());
 
 
 
@@ -111,8 +133,8 @@ public class VendorFormController {
                 // ArrayList<HashMap<String, Object>> rowItems = (ArrayList<HashMap<String,
                 // Object>>) entry.getValue();
                 // pdfGenerator.generatePdf(rowItems);
-            }
-        }
+            // }
+        // }
         // HashMap<String, Object> formContent = content.getFormContent();
         // pdfGenerator.generatePdf(formContent);
     }
