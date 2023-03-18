@@ -5,16 +5,20 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.TableRowAlign;
 import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFFooter;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell.XWPFVertAlign;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.docx4j.Docx4J;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -65,6 +69,8 @@ public class JsonToWord {
         // json2word.saveDocument();
     }
 
+    
+
     public void createDocument(String filePath) {
         // File path has to have .docx
         // Para seems to be a forced newline
@@ -108,6 +114,67 @@ public class JsonToWord {
         XWPFParagraph para = doc.createParagraph();
         XWPFRun run = para.createRun();
         run.setText(line);
+    }
+
+    public void createFormInfo(JSONObject input){
+        // Create a new header and set the text
+        // XWPFHeader header = doc.createHeader(HeaderFooterType.DEFAULT);
+        XWPFTable table = doc.createTable(3,3);
+
+        XWPFParagraph para1 = table.getRow(0).getCell(0).addParagraph();
+        para1.setAlignment(ParagraphAlignment.CENTER);
+        para1.createRun().setText("QUANTUM LEAP INCORPORATION PTE LTD");
+        table.getRow(0).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        XWPFParagraph para2 = table.getRow(1).getCell(0).addParagraph();
+        para2.createRun().setText(input.get("formName").toString());
+        para2.setAlignment(ParagraphAlignment.CENTER);
+        table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        
+        //Getting today date
+        LocalDate dateObj = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = dateObj.format(formatter);
+        
+        table.getRow(2).getCell(0).setText("FORM ID");
+        table.getRow(2).getCell(0).setWidth("5000");;
+        table.getRow(2).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        table.getRow(2).getCell(1).setText("Date: " + date);
+        table.getRow(2).getCell(1).setWidth("5000");;
+        table.getRow(2).getCell(2).setText("Revision: " + "v1.0.1");
+        table.getRow(2).getCell(2).setWidth("5000");;
+
+        //Merging headers
+        CTHMerge hMerge = CTHMerge.Factory.newInstance();
+        CTHMerge hMerge2 = CTHMerge.Factory.newInstance();
+        for (int i = 0; i < 3; i++) {
+            //Merge cells in row 1
+            if (i == 0) {
+                hMerge.setVal(STMerge.RESTART);
+                hMerge2.setVal(STMerge.RESTART);
+            } else {
+                hMerge.setVal(STMerge.CONTINUE);
+                hMerge2.setVal(STMerge.CONTINUE);
+            }
+            table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge);
+            table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
+        }
+
+        //Creating footers
+        XWPFParagraph paragraph = doc.createParagraph();
+        // Create a footer
+        XWPFHeaderFooterPolicy footerPolicy = doc.getHeaderFooterPolicy();
+        if (footerPolicy == null) {
+            footerPolicy = doc.createHeaderFooterPolicy();
+        }
+        XWPFFooter footer = footerPolicy.createFooter(XWPFHeaderFooterPolicy.DEFAULT);
+        // Set the center footer
+        paragraph = footer.getParagraphArray(0);
+        if (paragraph == null) {
+            paragraph = footer.createParagraph();
+        }
+        paragraph.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun run = paragraph.createRun();
+        run.setText(input.get("formName").toString() + "                       QUANTUM LEAP INCORPORATION                       " + "Version Number");
     }
 
     /**
@@ -215,7 +282,7 @@ public class JsonToWord {
         for (int i = 0; i < options.length(); i++) {
             XWPFRun optionRun = doc.createParagraph().createRun();
             optionRun.addTab();
-            optionRun.setText(options.get(i) + " [ ]");
+            optionRun.setText("[ ] " + options.get(i));
         }
     }
 
@@ -276,6 +343,32 @@ public class JsonToWord {
         for (int i = 0; i < options.length(); i++) {
             table.getRow(3 + i).getCell(0).setText(options.getString(i));
         }
+    }
+
+    public void createSubcontractorAcknowledgement(){
+        doc.createParagraph().createRun().addBreak(); //Line Break
+        XWPFTable table = doc.createTable();
+        // Creates "Acknowledgement"
+        XWPFParagraph para = table.getRow(0).getCell(0).addParagraph();
+        XWPFRun header = para.createRun();
+        header.setBold(true);
+        header.setText("ACKNOWLEDGEMENT");
+        // header.setFontSize(14);
+        para.setAlignment(ParagraphAlignment.CENTER);
+        //Block of text
+        table.createRow();
+        XWPFParagraph blockText = table.getRow(1).getCell(0).addParagraph();
+        XWPFRun blockTextRun = blockText.createRun();
+        blockTextRun.setText("I, representative of the above-named sub-contractor, have understand the various Safety Criteria listed above and hereby acknowledged that the information given above are valid and supporting items/documents are available upon request by the main contractor.");
+        //Signature
+        table.createRow();
+        XWPFParagraph signaturePara = table.getRow(2).getCell(0).addParagraph();
+        XWPFRun signatureRun = signaturePara.createRun();
+        signatureRun.setText("Date: _____________");
+        signatureRun.addBreak();
+        signatureRun.setText("Acknowledged by: _________________________________                    Signature: _____________");
+
+        // table.getRow(2).getCell(0)
     }
 
     public void drawBoolOption() {

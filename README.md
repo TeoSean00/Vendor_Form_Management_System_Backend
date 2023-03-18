@@ -51,4 +51,4 @@ Currently, PDFGenerator is only accessible through Postman via this link `http:/
 
 3. Copy the contents of `accessToken` into Authorization tab. Switch from whatever it is to bearer token and paste in your access token. 
 
-4. Send a GET request to `ttp://localhost:8080/api/form/generateForm/{formID}}`, making sure the `formID` exists in your database. After that is done, the generated word file will be INSIDE your Docker container. In order to access it, open up `cli` and paste in the following `docker cp smartform:/form.docx ~/Desktop/form.docx`. Replace the second argument with the output destination.
+4. Send a GET request to `http://localhost:8080/api/form/generateForm/{formID}}`, making sure the `formID` exists in your database. After that is done, the generated word file will be INSIDE your Docker container. In order to access it, open up `cli` and paste in the following `docker cp smartform:/form.docx ~/Desktop/form.docx`. Replace the second argument with the output destination.
