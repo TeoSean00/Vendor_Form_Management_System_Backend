@@ -41,6 +41,13 @@ public class VendorFormController {
         return vendorFormDAO.findAll();
     }
 
+    // get all the forms for a specific vendor
+    @GetMapping("/vendor/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<VendorForm> getVendorForms(@PathVariable String id) {
+        return vendorFormDAO.findAllVendorForms(id);
+    }
+
     // need to tell spring to send the id to the method
     @RequestMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -57,6 +64,7 @@ public class VendorFormController {
         String checkId = vendorForm.getVendorId();
         System.out.println(checkId + "CHECK ID IS HERE");
         vendorForm.setStatus("vendor_response");
+        vendorForm.setRevNumber(1);
         Vendor checkVendor = mongoTemplate.findById(checkId, Vendor.class);
         if (checkVendor != null) {
             vendorFormDAO.insertVendorForm(vendorForm);
@@ -93,47 +101,42 @@ public class VendorFormController {
         }
         // System.out.println(content.get("FormInfo"));
         // JSONArray formContent = content.get("FormContent");
-        
+
         // for (Map.Entry<String, Object> entry : content.entrySet()) {
-        //     System.out.println(entry.getKey() + "/" + entry.getValue());
-        //     if (entry.getKey().equals("FormInfo")) {
-        //         System.out.println("This is form info!");
-        //     } else if (entry.getKey().equals("FormContent")) {
-        //         System.out.println("This is FormContent");
-        //         System.out.println(entry.getValue().getClass());
-        //         // System.out.println(entry.getValue());
-        //         String key = entry.getKey();
-        //         String value = (String) entry.getValue();
-        //         ObjectMapper objMapper = new ObjectMapper();
-        //         JSONObject jsonObject = objMapper.readValue(value);
-        //         System.out.println("Value fking is");
-        //         System.out.println(value);
-        //         }
-                // String sectionContent = (String) entry.getValue();
-                // ArrayList<Map<String, Object>> sectionContent = (ArrayList<Map<String, Object>>) entry.getValue();
-                
-                // pdfGenerator.generatePdf(entry.getValue());
+        // System.out.println(entry.getKey() + "/" + entry.getValue());
+        // if (entry.getKey().equals("FormInfo")) {
+        // System.out.println("This is form info!");
+        // } else if (entry.getKey().equals("FormContent")) {
+        // System.out.println("This is FormContent");
+        // System.out.println(entry.getValue().getClass());
+        // // System.out.println(entry.getValue());
+        // String key = entry.getKey();
+        // String value = (String) entry.getValue();
+        // ObjectMapper objMapper = new ObjectMapper();
+        // JSONObject jsonObject = objMapper.readValue(value);
+        // System.out.println("Value fking is");
+        // System.out.println(value);
+        // }
+        // String sectionContent = (String) entry.getValue();
+        // ArrayList<Map<String, Object>> sectionContent = (ArrayList<Map<String,
+        // Object>>) entry.getValue();
 
+        // pdfGenerator.generatePdf(entry.getValue());
 
-
-
-
-
-                
-                // for (Map<String, Object> item : sectionContent) {
-                // System.out.println(item);
-                // for (Map.Entry<String, Object> rowContent : item.entrySet()) {
-                // System.out.println(rowContent.getKey() + "/" + rowContent.getValue());
-                // List<Object> rowContentArray = (List<Object>) rowContent.getValue();
-                // for (Object rowItem : rowContentArray) {
-                // System.out.println(rowItem);
-                // }
-                // }
-                // }
-                // ArrayList<HashMap<String, Object>> rowItems = (ArrayList<HashMap<String,
-                // Object>>) entry.getValue();
-                // pdfGenerator.generatePdf(rowItems);
-            // }
+        // for (Map<String, Object> item : sectionContent) {
+        // System.out.println(item);
+        // for (Map.Entry<String, Object> rowContent : item.entrySet()) {
+        // System.out.println(rowContent.getKey() + "/" + rowContent.getValue());
+        // List<Object> rowContentArray = (List<Object>) rowContent.getValue();
+        // for (Object rowItem : rowContentArray) {
+        // System.out.println(rowItem);
+        // }
+        // }
+        // }
+        // ArrayList<HashMap<String, Object>> rowItems = (ArrayList<HashMap<String,
+        // Object>>) entry.getValue();
+        // pdfGenerator.generatePdf(rowItems);
+        // }
         // }
         // HashMap<String, Object> formContent = content.getFormContent();
         // pdfGenerator.generatePdf(formContent);
