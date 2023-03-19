@@ -16,6 +16,8 @@ public class VendorForm {
     private String vendorName;
     private String creationDate;
     private String vendorId;
+    private String formNo;
+    private int revNumber;
     private Map<String, Object> content;
 
     @JsonCreator
@@ -26,6 +28,22 @@ public class VendorForm {
         this.vendorId = vendorId;
         this.content = content;
         this.deadline = deadline;
+    }
+
+    public String getFormNo() {
+        return formNo;
+    }
+
+    public void setFormNo(String formNo) {
+        this.formNo = formNo;
+    }
+
+    public int getRevNumber() {
+        return revNumber;
+    }
+
+    public void setRevNumber(int revNumber) {
+        this.revNumber = revNumber;
     }
 
     public String getDeadline() {
