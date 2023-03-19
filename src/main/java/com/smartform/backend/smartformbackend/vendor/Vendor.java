@@ -3,19 +3,16 @@ package com.smartform.backend.smartformbackend.vendor;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.DateTimeAtCreation;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.smartform.backend.smartformbackend.auth.User;
-import com.smartform.backend.smartformbackend.form.VendorForm;
 
 @Document(collection = "vendors")
 public class Vendor {
     @Id
     private String id;
     private String name;
+    private String country;
+    private String details;
     private List<String> users = new ArrayList<String>();
     private List<String> forms = new ArrayList<String>();
 
@@ -25,6 +22,22 @@ public class Vendor {
 
     public Vendor(String name) {
         this.name = name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public String getId() {
