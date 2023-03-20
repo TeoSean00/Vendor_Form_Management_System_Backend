@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @RequestMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public List<User> getUsers(@PathVariable String id) {
         // call a method from the business service of the topic that has the id
         return userRepository.findUsersByVendor(id);
