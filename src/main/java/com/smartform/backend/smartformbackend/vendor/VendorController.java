@@ -28,7 +28,6 @@ public class VendorController {
 
     // need to tell spring to send the id to the method
     @RequestMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public Vendor getVendor(@PathVariable String id) {
         return vendorDAO.getVendor(id);
     }

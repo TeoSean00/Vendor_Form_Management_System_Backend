@@ -43,14 +43,12 @@ public class VendorFormController {
 
     // get all the forms for a specific vendor
     @GetMapping("/vendor/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public List<VendorForm> getVendorForms(@PathVariable String id) {
         return vendorFormDAO.findAllVendorForms(id);
     }
 
     // need to tell spring to send the id to the method
     @RequestMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public VendorForm getForm(@PathVariable String id) {
         // call a method from the business service of the topic that has the id
         return vendorFormDAO.getVendorForm(id);
@@ -74,7 +72,6 @@ public class VendorFormController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public void updateForm(@RequestBody VendorForm form, @PathVariable String id) {
         vendorFormDAO.updateVendorForm(id, form);
     }
