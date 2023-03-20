@@ -1,6 +1,8 @@
 package com.smartform.backend.smartformbackend.vendor;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +38,7 @@ public class VendorController {
     @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
     public void addVendor(@RequestBody Vendor vendor) {
+        vendor.setJoinDate(new Date());
         vendorDAO.insertVendor(vendor);
     }
 
@@ -50,4 +53,11 @@ public class VendorController {
     public void deleteVendor(@PathVariable String id) {
         vendorDAO.deleteVendor(id);
     }
+
+    @GetMapping("/getJoinDates")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<Integer, JoinDateDTO> getJoinDates() {
+        return vendorDAO.getJoinDates();
+    }
+
 }

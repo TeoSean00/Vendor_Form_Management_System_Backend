@@ -1,6 +1,7 @@
 package com.smartform.backend.smartformbackend.vendor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -13,6 +14,8 @@ public class Vendor {
     private String name;
     private String country;
     private String details;
+    private Date joinDate;
+
     private List<String> users = new ArrayList<String>();
     private List<String> forms = new ArrayList<String>();
 
@@ -22,6 +25,14 @@ public class Vendor {
 
     public Vendor(String name) {
         this.name = name;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
     }
 
     public String getCountry() {
