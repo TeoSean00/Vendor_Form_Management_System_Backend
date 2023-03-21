@@ -7,6 +7,7 @@ services:
       - 27017:27017
 
   smartform:
+    platform: linux/amd64
     build: ./
     image: smartform
     container_name: smartform
