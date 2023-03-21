@@ -216,12 +216,12 @@ public class JsonToWord {
         XWPFRun answer = para.createRun();
         answer.setUnderline(UnderlinePatterns.SINGLE);
         // We need this for them the form is populated
-        // if (input.get("type").equals("number")) {
-        // answer.setText(Integer.toString((int) input.get("input")));
-        // } else {
+        if (input.get("type").equals("number")) {
+            answer.setText(Integer.toString((int) input.get("input")));
+        } else {
+            answer.setText((String) input.get("input"));
+        }
         // answer.setText((String) input.get("input"));
-        // }
-        answer.setText((String) input.get("input"));
     }
 
     /**
