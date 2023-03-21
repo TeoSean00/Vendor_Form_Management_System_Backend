@@ -23,7 +23,7 @@ public class VendorController {
 
     // anything you return is automatically coverted to JS
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public List<Vendor> getAllVendors() {
         return vendorDAO.findAll();
     }
@@ -35,7 +35,7 @@ public class VendorController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     // getting the the request payload
     public void addVendor(@RequestBody Vendor vendor) {
         vendor.setJoinDate(new Date());
@@ -43,19 +43,19 @@ public class VendorController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public void updateVendor(@RequestBody Vendor vendor, @PathVariable String id) {
         vendorDAO.updateVendor(id, vendor);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public void deleteVendor(@PathVariable String id) {
         vendorDAO.deleteVendor(id);
     }
 
     @GetMapping("/getJoinDates")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public Map<Integer, JoinDateDTO> getJoinDates() {
         return vendorDAO.getJoinDates();
     }

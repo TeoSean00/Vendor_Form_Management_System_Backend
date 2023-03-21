@@ -5,6 +5,11 @@ import java.util.List;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +41,7 @@ public class VendorFormController {
 
     // anything you return is automatically coverted to JS
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public List<VendorForm> getAllForms() {
         return vendorFormDAO.findAll();
     }
@@ -56,7 +61,7 @@ public class VendorFormController {
 
     // map this method to any request that is a POST at /topics
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     // getting the the request payload
     public void addForm(@RequestBody VendorForm vendorForm) {
         String checkId = vendorForm.getVendorId();
@@ -77,25 +82,34 @@ public class VendorFormController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public void deleteForm(@PathVariable String id) {
         vendorFormDAO.deleteWorkflow(id);
     }
 
     @RequestMapping("generateForm/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public void generatePdf(@PathVariable String id) {
+    public ResponseEntity<byte[]> generatePdf(@PathVariable String id) {
         PDFGeneratorLayer pdfGenerator = new PDFGeneratorLayer();
         VendorForm form = vendorFormDAO.getVendorForm(id);
         String json;
+        byte[] bytes;
         try {
             json = new ObjectMapper().writeValueAsString(form.getContent());
             JSONObject jsonObj = new JSONObject(json);
-            pdfGenerator.generatePdf(jsonObj);
+            bytes = pdfGenerator.generatePdf(jsonObj);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentLength(bytes.length);
+            headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+            System.out.println("I AM CHECING THE BYTES ");
+            System.out.println(bytes.length);
+            return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return null;
         // System.out.println(content.get("FormInfo"));
         // JSONArray formContent = content.get("FormContent");
 
