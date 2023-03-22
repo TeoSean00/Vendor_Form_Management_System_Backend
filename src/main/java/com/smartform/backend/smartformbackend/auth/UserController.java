@@ -22,7 +22,7 @@ public class UserController {
 
     // anything you return is automatically coverted to JS
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
