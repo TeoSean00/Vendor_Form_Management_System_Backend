@@ -1,10 +1,14 @@
 package com.smartform.backend.smartformbackend.pdfgenerator;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -69,8 +73,6 @@ public class JsonToWord {
         // json2word.saveDocument();
     }
 
-    
-
     public void createDocument(String filePath) {
         // File path has to have .docx
         // Para seems to be a forced newline
@@ -93,7 +95,7 @@ public class JsonToWord {
         }
     }
 
-    public void saveToPdf(String filePath) {
+    public byte[] saveToPdf(String filePath) {
         try {
             InputStream templateInputStream = new FileInputStream(filePath);
             WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateInputStream);
@@ -104,9 +106,18 @@ public class JsonToWord {
             Docx4J.toPDF(wordMLPackage, os);
             os.flush();
             os.close();
+
+            Path pdfPath = Paths.get("test.pdf");
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] data = Files.readAllBytes(pdfPath);
+
+            System.out.println("I AM CHECING THE BYTES ");
+            System.out.println(data.length);
+            return data;
         } catch (Throwable e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public void writeLine(String line) {
@@ -116,10 +127,10 @@ public class JsonToWord {
         run.setText(line);
     }
 
-    public void createFormInfo(JSONObject input){
+    public void createFormInfo(JSONObject input) {
         // Create a new header and set the text
         // XWPFHeader header = doc.createHeader(HeaderFooterType.DEFAULT);
-        XWPFTable table = doc.createTable(3,3);
+        XWPFTable table = doc.createTable(3, 3);
 
         XWPFParagraph para1 = table.getRow(0).getCell(0).addParagraph();
         para1.setAlignment(ParagraphAlignment.CENTER);
@@ -129,25 +140,28 @@ public class JsonToWord {
         para2.createRun().setText(input.get("formName").toString());
         para2.setAlignment(ParagraphAlignment.CENTER);
         table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
-        
-        //Getting today date
+
+        // Getting today date
         LocalDate dateObj = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = dateObj.format(formatter);
-        
+
         table.getRow(2).getCell(0).setText("FORM ID");
-        table.getRow(2).getCell(0).setWidth("5000");;
+        table.getRow(2).getCell(0).setWidth("5000");
+        ;
         table.getRow(2).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
         table.getRow(2).getCell(1).setText("Date: " + date);
-        table.getRow(2).getCell(1).setWidth("5000");;
+        table.getRow(2).getCell(1).setWidth("5000");
+        ;
         table.getRow(2).getCell(2).setText("Revision: " + "v1.0.1");
-        table.getRow(2).getCell(2).setWidth("5000");;
+        table.getRow(2).getCell(2).setWidth("5000");
+        ;
 
-        //Merging headers
+        // Merging headers
         CTHMerge hMerge = CTHMerge.Factory.newInstance();
         CTHMerge hMerge2 = CTHMerge.Factory.newInstance();
         for (int i = 0; i < 3; i++) {
-            //Merge cells in row 1
+            // Merge cells in row 1
             if (i == 0) {
                 hMerge.setVal(STMerge.RESTART);
                 hMerge2.setVal(STMerge.RESTART);
@@ -159,7 +173,7 @@ public class JsonToWord {
             table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
         }
 
-        //Creating footers
+        // Creating footers
         XWPFParagraph paragraph = doc.createParagraph();
         // Create a footer
         XWPFHeaderFooterPolicy footerPolicy = doc.getHeaderFooterPolicy();
@@ -174,7 +188,8 @@ public class JsonToWord {
         }
         paragraph.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun run = paragraph.createRun();
-        run.setText(input.get("formName").toString() + "                       QUANTUM LEAP INCORPORATION                       " + "Version Number");
+        run.setText(input.get("formName").toString()
+                + "                       QUANTUM LEAP INCORPORATION                       " + "Version Number");
     }
 
     /**
@@ -200,7 +215,13 @@ public class JsonToWord {
         question.addTab();
         XWPFRun answer = para.createRun();
         answer.setUnderline(UnderlinePatterns.SINGLE);
-        answer.setText((String) input.get("input"));
+        // We need this for them the form is populated
+        if (input.get("type").equals("number")) {
+            answer.setText(Integer.toString((int) input.get("input")));
+        } else {
+            answer.setText((String) input.get("input"));
+        }
+        // answer.setText((String) input.get("input"));
     }
 
     /**
@@ -345,8 +366,8 @@ public class JsonToWord {
         }
     }
 
-    public void createSubcontractorAcknowledgement(){
-        doc.createParagraph().createRun().addBreak(); //Line Break
+    public void createSubcontractorAcknowledgement() {
+        doc.createParagraph().createRun().addBreak(); // Line Break
         XWPFTable table = doc.createTable();
         // Creates "Acknowledgement"
         XWPFParagraph para = table.getRow(0).getCell(0).addParagraph();
@@ -355,18 +376,20 @@ public class JsonToWord {
         header.setText("ACKNOWLEDGEMENT");
         // header.setFontSize(14);
         para.setAlignment(ParagraphAlignment.CENTER);
-        //Block of text
+        // Block of text
         table.createRow();
         XWPFParagraph blockText = table.getRow(1).getCell(0).addParagraph();
         XWPFRun blockTextRun = blockText.createRun();
-        blockTextRun.setText("I, representative of the above-named sub-contractor, have understand the various Safety Criteria listed above and hereby acknowledged that the information given above are valid and supporting items/documents are available upon request by the main contractor.");
-        //Signature
+        blockTextRun.setText(
+                "I, representative of the above-named sub-contractor, have understand the various Safety Criteria listed above and hereby acknowledged that the information given above are valid and supporting items/documents are available upon request by the main contractor.");
+        // Signature
         table.createRow();
         XWPFParagraph signaturePara = table.getRow(2).getCell(0).addParagraph();
         XWPFRun signatureRun = signaturePara.createRun();
         signatureRun.setText("Date: _____________");
         signatureRun.addBreak();
-        signatureRun.setText("Acknowledged by: _________________________________                    Signature: _____________");
+        signatureRun.setText(
+                "Acknowledged by: _________________________________                    Signature: _____________");
 
         // table.getRow(2).getCell(0)
     }

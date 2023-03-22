@@ -20,32 +20,27 @@ public class TemplateController {
     private TemplateDAO templateDAO;
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
     public List<Template> getallTemplates() {
         return templateDAO.findAll();
     }
 
     @RequestMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public Template getTemplate(@PathVariable String id) {
         return templateDAO.getTemplate(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    @PreAuthorize("hasRole('ADMIN')")
     // getting the the request payload
     public void addTemplate(@RequestBody Template template) {
         templateDAO.insertTemplate(template);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public void updateTemplate(@RequestBody Template template, @PathVariable String id) {
         templateDAO.updateTemplate(id, template);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public void deleteTemplate(@PathVariable String id) {
         templateDAO.deleteTemplate(id);
     }
