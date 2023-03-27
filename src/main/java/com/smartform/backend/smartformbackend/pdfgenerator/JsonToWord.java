@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,6 +23,7 @@ import org.apache.poi.xwpf.usermodel.XWPFFooter;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell.XWPFVertAlign;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.docx4j.Docx4J;
@@ -30,12 +32,25 @@ import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHMerge;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STJc;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 
 //\u2002 is the white space character
 public class JsonToWord {
     XWPFDocument doc;
     FileOutputStream fos;
+    int Counter = 1;
+    public int getCounter() {
+        return Counter;
+    }
+
+    public void setCounter(int counter) {
+        Counter = counter;
+    }
 
     public JsonToWord() {
 
@@ -60,7 +75,7 @@ public class JsonToWord {
         // row1.add("John");
         // row1.add("Doe");
 
-        // // Create a new ArrayList to hold the values for the second row of the table
+        // // Create a new ArrayLcreatedist to hold the values for the second row of the table
         // ArrayList<String> row2 = new ArrayList<String>();
         // row2.add("2");
         // row2.add("Jane");
@@ -136,6 +151,12 @@ public class JsonToWord {
         para1.setAlignment(ParagraphAlignment.CENTER);
         para1.createRun().setText("QUANTUM LEAP INCORPORATION PTE LTD");
         table.getRow(0).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        CTHMerge hMerge0 = CTHMerge.Factory.newInstance();
+        for (int i=0; i <3; i++){
+            hMerge0.setVal(STMerge.CONTINUE);
+            table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge0);
+        }
+
         XWPFParagraph para2 = table.getRow(1).getCell(0).addParagraph();
         para2.createRun().setText(input.get("formName").toString());
         para2.setAlignment(ParagraphAlignment.CENTER);
@@ -209,7 +230,9 @@ public class JsonToWord {
         // }};
         XWPFParagraph para = doc.createParagraph();
         XWPFRun question = para.createRun();
-        question.setText(input.get("order") + ".");
+        // question.setText(input.get("order") + ".");
+        // question.addTab();
+        question.setText(Counter + ".");
         question.addTab();
         question.setText((String) input.get("label"));
         question.addTab();
@@ -217,7 +240,11 @@ public class JsonToWord {
         answer.setUnderline(UnderlinePatterns.SINGLE);
         // We need this for them the form is populated
         if (input.get("type").equals("number")) {
-            answer.setText(Integer.toString((int) input.get("input")));
+            try {
+                answer.setText(Integer.toString((int) input.get("input")));
+            } catch (Exception e ){
+                answer.setText("unfilled");
+            }
         } else {
             answer.setText((String) input.get("input"));
         }
@@ -243,7 +270,7 @@ public class JsonToWord {
         XWPFRun header = para.createRun();
         header.setBold(true);
         header.setFontSize(14);
-        header.setText(input.get("order") + ".");
+        // header.setText(input.get("order") + ".");
         header.setText((String) input.get("label"));
 
     }
@@ -268,7 +295,8 @@ public class JsonToWord {
         // }};
         XWPFParagraph para = doc.createParagraph();
         XWPFRun booleanText = para.createRun();
-        booleanText.setText(input.get("order") + ".");
+        booleanText.setText(Counter + ".");
+        // booleanText.setText(input.get("order") + ".");
         booleanText.addTab();
         booleanText.setText((String) input.get("label"));
         drawBoolOption();
@@ -298,6 +326,8 @@ public class JsonToWord {
         XWPFParagraph paragraph = doc.createParagraph();
         XWPFRun run = paragraph.createRun();
         run.addBreak();
+        run.setText(Counter +". ");
+        run.addTab();
         run.setText((String) input.get("label"));
         JSONArray options = (JSONArray) input.get("options");
         for (int i = 0; i < options.length(); i++) {
@@ -328,18 +358,30 @@ public class JsonToWord {
         // Tables are always 6 columns, number of options + 3
         JSONArray options = (JSONArray) input.get("options");
         int noOfOptions = options.length();
-        doc.createParagraph();
-        XWPFTable table = doc.createTable(noOfOptions + 4, 6);
+        XWPFRun run = doc.createParagraph().createRun();
+        run.setText(Counter + ". ");
+        run.addTab();
+        run.setText((String) input.get("label"));
+        XWPFTable table = doc.createTable(noOfOptions + 3, 6);
+        // Setting width
+        table.setWidth("100%");
+        table.setTableAlignment(TableRowAlign.CENTER);
+
         // Set header
-        table.getRow(0).getCell(0).setText((String) input.get("label"));
-        table.getRow(1).getCell(1).setText("Grade");
-        table.getRow(2).getCell(1).setText("1 (Poor)");
-        table.getRow(2).getCell(2).setText("2 (Below Average)");
-        table.getRow(2).getCell(3).setText("3 (Average)");
-        table.getRow(2).getCell(4).setText("4 (Above Average)");
-        table.getRow(2).getCell(5).setText("5 (Good)");
+        table.getRow(0).getCell(0).setText("Grade");
+        table.getRow(1).getCell(1).setText("1 (Poor)");
+        table.getRow(1).getCell(2).setText("2 (Below Average)");
+        table.getRow(1).getCell(3).setText("3 (Average)");
+        table.getRow(1).getCell(4).setText("4 (Above Average)");
+        table.getRow(1).getCell(5).setText("5 (Good)");
+
+        table.getRow(0).getCell(0).setWidth("auto");
+        table.getRow(1).getCell(1).setWidth("10%");
+        table.getRow(1).getCell(2).setWidth("10%");
+        table.getRow(1).getCell(3).setWidth("10%");
+        table.getRow(1).getCell(4).setWidth("10%");
+        table.getRow(1).getCell(5).setWidth("10%");
         // Set score at bottom
-        table.getRow(noOfOptions + 3).getCell(1).setText("SCORE = ");
         // Merging headers
         CTHMerge hMerge = CTHMerge.Factory.newInstance();
         CTHMerge hMerge2 = CTHMerge.Factory.newInstance();
@@ -347,8 +389,6 @@ public class JsonToWord {
         for (int i = 0; i < 6; i++) {
             // Merge cells in row 1
             if (i == 0) {
-                hMerge.setVal(STMerge.RESTART);
-            } else if (i == 1) {
                 hMerge2.setVal(STMerge.RESTART);
                 hMerge3.setVal(STMerge.RESTART);
                 hMerge.setVal(STMerge.CONTINUE);
@@ -357,12 +397,14 @@ public class JsonToWord {
                 hMerge3.setVal(STMerge.CONTINUE);
             }
             table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge);
-            table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
-            table.getRow(noOfOptions + 3).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
+            // table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
+            table.getRow(noOfOptions + 2).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
         }
+        table.getRow(noOfOptions + 2).getCell(0).setText("SCORE = ");
+
         // Filling in options
         for (int i = 0; i < options.length(); i++) {
-            table.getRow(3 + i).getCell(0).setText(options.getString(i));
+            table.getRow(2 + i).getCell(0).setText(options.getString(i));
         }
     }
 
@@ -403,16 +445,26 @@ public class JsonToWord {
         header.setText("RESULT OF EVALUATION:");
 
         // Creating table
-        XWPFTable table = doc.createTable();
+        XWPFTable table = doc.createTable(4,4);
+        table.setWidth("100%");
+        table.setTableAlignment(TableRowAlign.CENTER);
+
         XWPFRun para1 = table.getRow(0).getCell(0).addParagraph().createRun();
+        table.getRow(0).getCell(0).setWidth("25%");
         para1.setBold(true);
         para1.setText("Approved");
+
+        table.getRow(0).getCell(1).setWidth("25%");
+        table.getRow(0).getCell(3).setWidth("25%");
+
         
         XWPFRun para2 = table.getRow(0).getCell(2).addParagraph().createRun();
+        table.getRow(0).getCell(2).setWidth("25%");
         para2.setBold(true);
         para2.setText("Not Approved");
 
         XWPFRun para3 = table.getRow(1).getCell(0).addParagraph().createRun();
+
         para3.setText("Evaluated by: "); 
         XWPFRun para4 = table.getRow(1).getCell(2).addParagraph().createRun();
         para4.setText("Signature: "); 
@@ -420,6 +472,7 @@ public class JsonToWord {
         XWPFRun para5 = table.getRow(2).getCell(0).addParagraph().createRun();
         para5.setText("Approved by Director: "); 
         XWPFRun para6 = table.getRow(2).getCell(2).addParagraph().createRun();
+
         para6.setText("Signature: "); 
         
         XWPFRun para7 = table.getRow(3).getCell(0).addParagraph().createRun();

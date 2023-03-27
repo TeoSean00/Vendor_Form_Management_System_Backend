@@ -35,19 +35,29 @@ public class PDFGeneratorLayer {
                         questionObj.get("type").equals("date") ||
                         questionObj.get("type").equals("number")) {
                     json2word.createTextInput(questionObj);
+                    // Increment counters by 1
+                    json2word.setCounter(json2word.getCounter()+1);
                 } else if (questionObj.get("type").equals("boolean")) {
                     json2word.createBoolean(questionObj);
+                    json2word.setCounter(json2word.getCounter()+1);
                 } else if (questionObj.get("type").equals("checkbox")) {
                     json2word.createRadioGroup(questionObj);
+                    json2word.setCounter(json2word.getCounter()+1);
                 } else if (questionObj.get("type").equals("radio")) {
                     json2word.createRadioGroup(questionObj);
+                    json2word.setCounter(json2word.getCounter()+1);
                 } else if (questionObj.get("type").equals("likertGroup")) {
                     json2word.createLikertGroup(questionObj);
+                    json2word.setCounter(json2word.getCounter()+1);
+                } else if (questionObj.get("type").equals("approval")) {
+                    json2word.createApprovalTable();
+                } else if (questionObj.get("type").equals("acknowledgement")) {
+                    json2word.createSubcontractorAcknowledgement();
                 }
             }
         }
         // json2word.createSubcontractorAcknowledgement();
-        json2word.createApprovalTable();
+        // json2word.createApprovalTable();
         json2word.saveDocument();
         byte[] pdfByteArr = json2word.saveToPdf(filePath);
         System.out.println("I AM CHECING THE BYTES ");
