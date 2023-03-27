@@ -86,7 +86,8 @@ public class VendorFormController {
     public void deleteForm(@PathVariable String id) {
         vendorFormDAO.deleteWorkflow(id);
     }
-
+    
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     @RequestMapping("generateForm/{id}")
     public ResponseEntity<byte[]> generatePdf(@PathVariable String id) {
         PDFGeneratorLayer pdfGenerator = new PDFGeneratorLayer();
