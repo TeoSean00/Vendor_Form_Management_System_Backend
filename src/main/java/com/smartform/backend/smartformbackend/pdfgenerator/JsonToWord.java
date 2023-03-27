@@ -394,6 +394,40 @@ public class JsonToWord {
         // table.getRow(2).getCell(0)
     }
 
+    public void createApprovalTable(){
+        // Creating header
+        XWPFParagraph para = doc.createParagraph();
+        XWPFRun header = para.createRun();
+        header.setBold(true);
+        header.setFontSize(14);
+        header.setText("RESULT OF EVALUATION:");
+
+        // Creating table
+        XWPFTable table = doc.createTable();
+        XWPFRun para1 = table.getRow(0).getCell(0).addParagraph().createRun();
+        para1.setBold(true);
+        para1.setText("Approved");
+        
+        XWPFRun para2 = table.getRow(0).getCell(2).addParagraph().createRun();
+        para2.setBold(true);
+        para2.setText("Not Approved");
+
+        XWPFRun para3 = table.getRow(1).getCell(0).addParagraph().createRun();
+        para3.setText("Evaluated by: "); 
+        XWPFRun para4 = table.getRow(1).getCell(2).addParagraph().createRun();
+        para4.setText("Signature: "); 
+        
+        XWPFRun para5 = table.getRow(2).getCell(0).addParagraph().createRun();
+        para5.setText("Approved by Director: "); 
+        XWPFRun para6 = table.getRow(2).getCell(2).addParagraph().createRun();
+        para6.setText("Signature: "); 
+        
+        XWPFRun para7 = table.getRow(3).getCell(0).addParagraph().createRun();
+        para7.setText("Effective Date: "); 
+
+
+    }
+
     public void drawBoolOption() {
         XWPFTable table = doc.createTable();
         table.setTableAlignment(TableRowAlign.RIGHT);

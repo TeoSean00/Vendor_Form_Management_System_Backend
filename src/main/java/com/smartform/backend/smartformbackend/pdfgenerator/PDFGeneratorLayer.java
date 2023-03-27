@@ -46,7 +46,8 @@ public class PDFGeneratorLayer {
                 }
             }
         }
-        json2word.createSubcontractorAcknowledgement();
+        // json2word.createSubcontractorAcknowledgement();
+        json2word.createApprovalTable();
         json2word.saveDocument();
         byte[] pdfByteArr = json2word.saveToPdf(filePath);
         System.out.println("I AM CHECING THE BYTES ");
