@@ -322,6 +322,7 @@ public class JsonToWord {
         // put("options", options);
         // put("type", "radioGroup");
         // }};
+        boolean shortAnswer = Boolean.parseBoolean(input.getString("shortAnswer"));
 
         XWPFParagraph paragraph = doc.createParagraph();
         XWPFRun run = paragraph.createRun();
@@ -331,9 +332,15 @@ public class JsonToWord {
         run.setText((String) input.get("label"));
         JSONArray options = (JSONArray) input.get("options");
         for (int i = 0; i < options.length(); i++) {
-            XWPFRun optionRun = doc.createParagraph().createRun();
+            XWPFParagraph para = doc.createParagraph();
+            XWPFRun optionRun = para.createRun();
             optionRun.addTab();
             optionRun.setText("[ ] " + options.get(i));
+            if (shortAnswer){
+                // Means need to append whatever short answer it is at the back 
+                XWPFRun answerRun = para.createRun();
+                answerRun.setText(": " + input.getJSONArray("shortAnswerList").get(i));
+            }
         }
     }
 

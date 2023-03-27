@@ -24,35 +24,40 @@ public class PDFGeneratorLayer {
             String key = keys.next();
             JSONArray sectionArray = sectionInfo.getJSONArray(key);
             for (int i2 = 0; i2 < sectionArray.length(); i2++) {
-                JSONObject questionObj = sectionArray.getJSONObject(i2);
-                // System.out.println(questionObj);
-                System.out.println(questionObj.get("type"));
-                // Currently missing header section, signature, radio group
-
-                if (questionObj.get("type").equals("header")) {
-                    json2word.createHeader(questionObj);
-                } else if (questionObj.get("type").equals("text") ||
-                        questionObj.get("type").equals("date") ||
-                        questionObj.get("type").equals("number")) {
-                    json2word.createTextInput(questionObj);
-                    // Increment counters by 1
-                    json2word.setCounter(json2word.getCounter()+1);
-                } else if (questionObj.get("type").equals("boolean")) {
-                    json2word.createBoolean(questionObj);
-                    json2word.setCounter(json2word.getCounter()+1);
-                } else if (questionObj.get("type").equals("checkbox")) {
-                    json2word.createRadioGroup(questionObj);
-                    json2word.setCounter(json2word.getCounter()+1);
-                } else if (questionObj.get("type").equals("radio")) {
-                    json2word.createRadioGroup(questionObj);
-                    json2word.setCounter(json2word.getCounter()+1);
-                } else if (questionObj.get("type").equals("likertGroup")) {
-                    json2word.createLikertGroup(questionObj);
-                    json2word.setCounter(json2word.getCounter()+1);
-                } else if (questionObj.get("type").equals("approval")) {
-                    json2word.createApprovalTable();
-                } else if (questionObj.get("type").equals("acknowledgement")) {
-                    json2word.createSubcontractorAcknowledgement();
+                try {
+                    JSONObject questionObj = sectionArray.getJSONObject(i2);
+                    // System.out.println(questionObj);
+                    System.out.println(questionObj.get("type"));
+                    // Currently missing header section, signature, radio group
+    
+                    if (questionObj.get("type").equals("header")) {
+                        json2word.createHeader(questionObj);
+                    } else if (questionObj.get("type").equals("text") ||
+                            questionObj.get("type").equals("date") ||
+                            questionObj.get("type").equals("number")) {
+                        json2word.createTextInput(questionObj);
+                        // Increment counters by 1
+                        json2word.setCounter(json2word.getCounter()+1);
+                    } else if (questionObj.get("type").equals("boolean")) {
+                        json2word.createBoolean(questionObj);
+                        json2word.setCounter(json2word.getCounter()+1);
+                    } else if (questionObj.get("type").equals("checkbox")) {
+                        json2word.createRadioGroup(questionObj);
+                        json2word.setCounter(json2word.getCounter()+1);
+                    } else if (questionObj.get("type").equals("radio")) {
+                        json2word.createRadioGroup(questionObj);
+                        json2word.setCounter(json2word.getCounter()+1);
+                    } else if (questionObj.get("type").equals("likertGroup")) {
+                        json2word.createLikertGroup(questionObj);
+                        json2word.setCounter(json2word.getCounter()+1);
+                    } else if (questionObj.get("type").equals("approval")) {
+                        json2word.createApprovalTable();
+                    } else if (questionObj.get("type").equals("acknowledgement")) {
+                        json2word.createSubcontractorAcknowledgement();
+                    }
+                } catch (Exception e){
+                    System.out.println("General Exception has occured when building form in Word.");
+                    System.out.println(e);
                 }
             }
         }
@@ -60,9 +65,9 @@ public class PDFGeneratorLayer {
         // json2word.createApprovalTable();
         json2word.saveDocument();
         byte[] pdfByteArr = json2word.saveToPdf(filePath);
-        System.out.println("I AM CHECING THE BYTES ");
-        System.out.println(pdfByteArr.length);
         return pdfByteArr;
+        // System.out.println("I AM CHECING THE BYTES ");
+        // System.out.println(pdfByteArr.length);
     }
 
 }
