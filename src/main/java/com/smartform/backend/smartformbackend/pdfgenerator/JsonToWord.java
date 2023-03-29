@@ -6,13 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
@@ -23,7 +23,6 @@ import org.apache.poi.xwpf.usermodel.XWPFFooter;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell.XWPFVertAlign;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.docx4j.Docx4J;
@@ -32,12 +31,7 @@ import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHMerge;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTcPr;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STJc;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 
 //\u2002 is the white space character
 public class JsonToWord {
@@ -209,8 +203,9 @@ public class JsonToWord {
         }
         paragraph.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun run = paragraph.createRun();
+        run.setFontSize(6);
         run.setText(input.get("formName").toString()
-                + "                       QUANTUM LEAP INCORPORATION                       " + "Version Number");
+                + "          QUANTUM LEAP INCORPORATION       " + "Version Number");
     }
 
     /**
@@ -222,12 +217,6 @@ public class JsonToWord {
      * Create text input can take in and create text, date and numeric inputs.
      */
     public void createTextInput(JSONObject input) {
-        // HashMap<String, Object> textInput = new HashMap<String, Object>() {{
-        // put("order", 2);
-        // put("label", "Please enter your name:");
-        // put("input", "Desmond");
-        // put("type", "text");
-        // }};
         XWPFParagraph para = doc.createParagraph();
         XWPFRun question = para.createRun();
         // question.setText(input.get("order") + ".");
@@ -260,12 +249,6 @@ public class JsonToWord {
      * Creates bold and different size headers based on style.
      */
     public void createHeader(JSONObject input) {
-        // HashMap<String, Object> headerInput = new HashMap<String, Object>() {{
-        // put("order", 1);
-        // put("label", "Header Name Here");
-        // put("style", "h1");
-        // put("type", "header");
-        // }};
         XWPFParagraph para = doc.createParagraph();
         XWPFRun header = para.createRun();
         header.setBold(true);
@@ -284,22 +267,22 @@ public class JsonToWord {
      * Creates a boolean question with YES / NO options at the right.
      */
     public void createBoolean(JSONObject input) {
-        // HashMap<String, Object> booleanInput = new HashMap<String, Object>() {{
-        // List<String> options = new ArrayList<>();
-        // options.add("Yes");
-        // options.add("No");
-        // put("order", 1);
-        // put("label", "Boolean Question");
-        // put("options", options);
-        // put("type", "radio");
-        // }};
+        String selected = input.getString("input");
         XWPFParagraph para = doc.createParagraph();
         XWPFRun booleanText = para.createRun();
         booleanText.setText(Counter + ".");
         // booleanText.setText(input.get("order") + ".");
         booleanText.addTab();
         booleanText.setText((String) input.get("label"));
-        drawBoolOption();
+        booleanText.addTab();
+        XWPFRun answer = para.createRun();
+        if (selected .equals("Yes")) {
+            answer.setText("[X] Yes | [ ] No");
+        } else {
+            answer.setText("[ ] Yes | [X] No");
+
+        }
+        // drawBoolOption();
     }
 
     /**
@@ -311,35 +294,82 @@ public class JsonToWord {
      * Creates a radio group
      */
     public void createRadioGroup(JSONObject input) {
-        // HashMap<String, Object> radioInput = new HashMap<String, Object>() {{
-        // List<String> options = new ArrayList<>();
-        // options.add("a. Sole proprietorship");
-        // options.add("b. Limited Company");
-        // options.add("d. Others");
-        // options.add("c. Partnership Agreement");
-        // put("order", 1);
-        // put("label", "Type of Business");
-        // put("options", options);
-        // put("type", "radioGroup");
-        // }};
-        boolean shortAnswer = Boolean.parseBoolean(input.getString("shortAnswer"));
-
         XWPFParagraph paragraph = doc.createParagraph();
         XWPFRun run = paragraph.createRun();
         run.addBreak();
         run.setText(Counter +". ");
         run.addTab();
         run.setText((String) input.get("label"));
+        // Getting checked indexes and putting them into a map to iterate easier
+        // boolean shortAnswer = input.getBoolean("shortAnswer");
+        JSONArray options = (JSONArray) input.get("options");
+        int checked = input.getInt("input");
+        for (int i = 0; i < options.length(); i++) {
+            XWPFParagraph para = doc.createParagraph();
+            XWPFRun optionRun = para.createRun();
+            optionRun.addTab();
+            optionRun.addTab();
+            if (checked == i){
+                optionRun.setText("[X] " + options.get(i));
+            } else {
+                optionRun.setText("[ ] " + options.get(i));
+            }
+            // if (shortAnswer){
+            //     // Means need to append whatever short answer it is at the back 
+            //     String shortAnswerString = input.getJSONArray("shortAnswerArr").getString(i);
+            //     XWPFRun answerRun = para.createRun();
+            //     if (shortAnswerString.length() != 0) {
+            //         answerRun.setText(": " + shortAnswerString);
+            //     } else {
+            //         answerRun.setText(": ___________________________");
+            //     }
+            // }
+        }
+    }
+    /**
+     * Takes in a Java object containing key-value pairs related to the type of
+     * input to be generated.
+     * Currently, the input is hardcoded. Input has to be coded such that the key
+     * order can be accessed via
+     * .get(key) methods.
+     * Creates a radio group
+     */
+    public void createCheckboxGroup(JSONObject input) {
+        XWPFParagraph paragraph = doc.createParagraph();
+        XWPFRun run = paragraph.createRun();
+        run.addBreak();
+        run.setText(Counter +". ");
+        run.addTab();
+        run.setText((String) input.get("label"));
+        // Getting checked indexes and putting them into a map to iterate easier
+        JSONArray checked = input.getJSONArray("input");
+        HashMap<Integer, Integer> answerMap = new HashMap<>();
+        for (int i=0;i<checked.length();i++){
+            answerMap.put(checked.getInt(i),checked.getInt(i));
+        }
+        System.out.println(answerMap);
+
+        boolean shortAnswer = input.getBoolean("shortAnswer");
         JSONArray options = (JSONArray) input.get("options");
         for (int i = 0; i < options.length(); i++) {
             XWPFParagraph para = doc.createParagraph();
             XWPFRun optionRun = para.createRun();
             optionRun.addTab();
-            optionRun.setText("[ ] " + options.get(i));
+            optionRun.addTab();
+            if (answerMap.containsKey(i)){
+                optionRun.setText("[X] " + options.get(i));
+            } else {
+                optionRun.setText("[ ] " + options.get(i));
+            }
             if (shortAnswer){
                 // Means need to append whatever short answer it is at the back 
+                String shortAnswerString = input.getJSONArray("shortAnswerArr").getString(i);
                 XWPFRun answerRun = para.createRun();
-                answerRun.setText(": " + input.getJSONArray("shortAnswerList").get(i));
+                if (shortAnswerString.length() != 0) {
+                    answerRun.setText(": " + shortAnswerString);
+                } else {
+                    answerRun.setText(": ___________________________");
+                }
             }
         }
     }
@@ -363,6 +393,7 @@ public class JsonToWord {
         // put("type", "likertGroup");
         // }};
         // Tables are always 6 columns, number of options + 3
+
         JSONArray options = (JSONArray) input.get("options");
         int noOfOptions = options.length();
         XWPFRun run = doc.createParagraph().createRun();
@@ -407,12 +438,23 @@ public class JsonToWord {
             // table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
             table.getRow(noOfOptions + 2).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
         }
-        table.getRow(noOfOptions + 2).getCell(0).setText("SCORE = ");
+
 
         // Filling in options
         for (int i = 0; i < options.length(); i++) {
             table.getRow(2 + i).getCell(0).setText(options.getString(i));
         }
+
+        //Filling in checked options and getting score.
+        int likertScore = 0;
+        JSONArray scoreList = input.getJSONArray("input");
+        for (int i=0;i<scoreList.length();i++){
+            likertScore += scoreList.getInt(i);
+            table.getRow(2+i).getCell(2+i).addParagraph();
+            table.getRow(2+i).getCell(2+i).setText("X");
+        }
+        table.getRow(noOfOptions + 2).getCell(0).setText("SCORE = ");
+        table.getRow(noOfOptions + 2).getCell(1).setText(Integer.toString(likertScore));
     }
 
     public void createSubcontractorAcknowledgement() {
