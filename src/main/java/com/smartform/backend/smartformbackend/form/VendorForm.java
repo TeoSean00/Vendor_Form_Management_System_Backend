@@ -17,44 +17,44 @@ public class VendorForm {
     private String id;
     private String status;
     private String vendorName;
-    private String creationDate;
+    private Date creationDate;
     private String vendorId;
     private String formNo;
     private int revNumber;
-    private String latestRejectionDate;
+    private Date latestRejectionDate;
     private String latestRejector;
     private int rejectionCount;
     private Map<String, String> rejectionDetails;
-    private String latestCompletedDate;
+    private Date latestCompletedDate;
     private String latestCompletor;
     private Map<String, Object> content;
     private Date deadline;
     private LocalDateTime reminderSentDate;
 
     @JsonCreator
-    public VendorForm(String vendorName, String creationDate, Map<String, Object> content, Date deadline,
+    public VendorForm(String vendorName, Date creationDate, Map<String, Object> content, Date deadline,
             String vendorId) {
         this.vendorName = vendorName;
         this.creationDate = creationDate;
         this.vendorId = vendorId;
         this.content = content;
         this.deadline = deadline;
-        this.latestRejectionDate = "";
+        this.latestRejectionDate = null;
         this.latestRejector = "";
-        this.rejectionDetails = new HashMap<String,String>();
-        this.rejectionDetails.put("admin",null);
-        this.rejectionDetails.put("vendor",null);
-        this.latestCompletedDate = "";
+        this.rejectionDetails = new HashMap<String, String>();
+        this.rejectionDetails.put("admin", null);
+        this.rejectionDetails.put("vendor", null);
+        this.latestCompletedDate = null;
         this.latestCompletor = "";
     }
 
     // Check if deadline has exceeded
-    public boolean hasExceededDeadline(){
+    public boolean hasExceededDeadline() {
         LocalDateTime now = LocalDateTime.now();
         return now.isAfter(deadline.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
     }
 
-    public LocalDateTime getReminderSentDate(){
+    public LocalDateTime getReminderSentDate() {
         return reminderSentDate;
     }
 
@@ -62,11 +62,11 @@ public class VendorForm {
         this.reminderSentDate = reminderSentDate;
     }
 
-    public String getLatestCompletedDate() {
+    public Date getLatestCompletedDate() {
         return latestCompletedDate;
     }
 
-    public void setLatestCompletedDate(String latestCompletedDate) {
+    public void setLatestCompletedDate(Date latestCompletedDate) {
         this.latestCompletedDate = latestCompletedDate;
     }
 
@@ -78,11 +78,11 @@ public class VendorForm {
         this.latestCompletor = latestCompletor;
     }
 
-    public String getLatestRejectionDate() {
+    public Date getLatestRejectionDate() {
         return latestRejectionDate;
     }
 
-    public void setLatestRejectionDate(String latestRejectionDate) {
+    public void setLatestRejectionDate(Date latestRejectionDate) {
         this.latestRejectionDate = latestRejectionDate;
     }
 
@@ -166,11 +166,11 @@ public class VendorForm {
         this.vendorName = vendorName;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return this.creationDate;
     }
 
-    public void setCreateDate(String creationDate) {
+    public void setCreateDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 

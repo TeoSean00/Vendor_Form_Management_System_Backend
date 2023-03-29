@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.smartform.backend.smartformbackend.form.VendorForm;
+
 @Repository
 public class VendorDAO {
     @Autowired
@@ -47,6 +49,25 @@ public class VendorDAO {
 
     public Vendor getVendor(final String topicId) {
         return mongoTemplate.findById(topicId, Vendor.class);
+    }
+
+    public Map<String, Integer> getAvgRejections() {
+        List<VendorForm> forms = mongoTemplate.findAll(VendorForm.class);
+        Map<String, Integer> formsPerVendor = new HashMap<String, Integer>();
+        Map<String, Integer> totalRejPerVendor = new HashMap<String, Integer>();
+
+        for (VendorForm form : forms) {
+            var vendorId = form.getVendorId();
+            var totalRej = form.getRejectionCount();
+
+            totalRejPerVendor.put(vendorId, totalRejPerVendor.getOrDefault(vendorId, 0) + totalRej);
+            formsPerVendor.put(vendorId, formsPerVendor.getOrDefault(vendorId, 0) + 1);
+        }
+
+        for (String key : totalRejPerVendor.keySet()) {
+            totalRejPerVendor.put(key, totalRejPerVendor.get(key) / formsPerVendor.get(key));
+        }
+        return totalRejPerVendor;
     }
 
     public Map<Integer, JoinDateDTO> getJoinDates() {
