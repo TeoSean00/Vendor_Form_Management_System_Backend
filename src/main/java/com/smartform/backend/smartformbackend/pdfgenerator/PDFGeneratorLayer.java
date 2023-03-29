@@ -42,7 +42,7 @@ public class PDFGeneratorLayer {
                         json2word.createBoolean(questionObj);
                         json2word.setCounter(json2word.getCounter()+1);
                     } else if (questionObj.get("type").equals("checkbox")) {
-                        json2word.createRadioGroup(questionObj);
+                        json2word.createCheckboxGroup(questionObj);
                         json2word.setCounter(json2word.getCounter()+1);
                     } else if (questionObj.get("type").equals("radio")) {
                         json2word.createRadioGroup(questionObj);
@@ -55,6 +55,7 @@ public class PDFGeneratorLayer {
                     } else if (questionObj.get("type").equals("acknowledgement")) {
                         json2word.createSubcontractorAcknowledgement();
                     }
+                    System.out.println("Counter is now " +json2word.getCounter());
                 } catch (Exception e){
                     System.out.println("General Exception has occured when building form in Word.");
                     System.out.println(e);
