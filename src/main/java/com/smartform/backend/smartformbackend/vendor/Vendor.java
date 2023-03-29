@@ -23,8 +23,11 @@ public class Vendor {
 
     }
 
-    public Vendor(String name) {
+    public Vendor(String name, String country, String details, Date joinDate) {
         this.name = name;
+        this.country = country;
+        this.details = details;
+        this.joinDate = joinDate;
     }
 
     public Date getJoinDate() {

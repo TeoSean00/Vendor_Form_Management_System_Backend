@@ -1,5 +1,11 @@
 package com.smartform.backend.smartformbackend.form;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -46,6 +52,36 @@ public class VendorFormController {
         return vendorFormDAO.findAll();
     }
 
+    // get all the updates
+    @GetMapping("/updates")
+    public List<VendorForm> getFormUpdates() {
+        var returnList = new ArrayList<VendorForm>();
+        var vendorFormList = vendorFormDAO.findAll();
+        LocalDate currentDate = LocalDate.now();
+        for (VendorForm form : vendorFormList) {
+            LocalDate createDate = form.getCreateDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (createDate.equals(currentDate)) {
+                returnList.add(form);
+            } else if (form.getLatestCompletedDate() != null) {
+                LocalDate lastCompleted = form.getLatestCompletedDate().toInstant().atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+                if (lastCompleted.equals(currentDate)) {
+                    returnList.add(form);
+                } else {
+                    if (form.getLatestRejectionDate() != null) {
+                        LocalDate lastRejDate = form.getLatestRejectionDate().toInstant()
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate();
+                        if (lastRejDate.equals(currentDate)) {
+                            returnList.add(form);
+                        }
+                    }
+                }
+            }
+        }
+        return returnList;
+    }
+
     // get all the forms for a specific vendor
     @GetMapping("/vendor/{id}")
     public List<VendorForm> getVendorForms(@PathVariable String id) {
@@ -86,7 +122,7 @@ public class VendorFormController {
     public void deleteForm(@PathVariable String id) {
         vendorFormDAO.deleteWorkflow(id);
     }
-    
+
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     @RequestMapping("generateForm/{id}")
     public ResponseEntity<byte[]> generatePdf(@PathVariable String id) {

@@ -55,4 +55,9 @@ public class VendorController {
         return vendorDAO.getJoinDates();
     }
 
+    @GetMapping("/getAverageRejection")
+    public Map<String, Integer> getAverageRejection() {
+        return vendorDAO.getAvgRejections();
+    }
+
 }
