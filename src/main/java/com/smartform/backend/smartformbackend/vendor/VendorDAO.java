@@ -57,11 +57,11 @@ public class VendorDAO {
         Map<String, Integer> totalRejPerVendor = new HashMap<String, Integer>();
 
         for (VendorForm form : forms) {
-            var vendorId = form.getVendorId();
+            var vendorName = form.getVendorName();
             var totalRej = form.getRejectionCount();
 
-            totalRejPerVendor.put(vendorId, totalRejPerVendor.getOrDefault(vendorId, 0) + totalRej);
-            formsPerVendor.put(vendorId, formsPerVendor.getOrDefault(vendorId, 0) + 1);
+            totalRejPerVendor.put(vendorName, totalRejPerVendor.getOrDefault(vendorName, 0) + totalRej);
+            formsPerVendor.put(vendorName, formsPerVendor.getOrDefault(vendorName, 0) + 1);
         }
 
         for (String key : totalRejPerVendor.keySet()) {
