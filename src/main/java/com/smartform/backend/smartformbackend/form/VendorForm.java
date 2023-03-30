@@ -182,4 +182,8 @@ public class VendorForm {
         this.vendorId = id;
     }
 
+    public Object getEmail() {
+        return null;
+    }
+
 }
