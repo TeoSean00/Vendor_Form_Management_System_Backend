@@ -18,9 +18,6 @@ public class Template {
         this.details = details;
     }
 
-    public Template(Object details2) {
-    }
-
     public String getId() {
         return id;
     }
