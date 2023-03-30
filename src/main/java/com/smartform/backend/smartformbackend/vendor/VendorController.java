@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,13 @@ public class VendorController {
     @GetMapping("/all")
     public List<Vendor> getAllVendors() {
         return vendorDAO.findAll();
+    }
+
+    @RequestMapping("/toggleReminder/{id}")
+    public ResponseEntity<String> toggleVendorReminder(@RequestBody Boolean status, @PathVariable String id) {
+        vendorDAO.getVendor(id).setReminderStatus(status);
+        return ResponseEntity
+                .ok("Vendor " + vendorDAO.getVendor(id).getName() + " updated reminderStatus.");
     }
 
     // need to tell spring to send the id to the method
