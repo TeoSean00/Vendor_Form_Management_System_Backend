@@ -15,6 +15,7 @@ public class Vendor {
     private String country;
     private String details;
     private Date joinDate;
+    private Boolean reminderStatus;
 
     private List<String> users = new ArrayList<String>();
     private List<String> forms = new ArrayList<String>();
@@ -28,6 +29,15 @@ public class Vendor {
         this.country = country;
         this.details = details;
         this.joinDate = joinDate;
+        this.reminderStatus = true;
+    }
+
+    public Boolean getReminderStatus() {
+        return reminderStatus;
+    }
+
+    public void setReminderStatus(Boolean reminderStatus) {
+        this.reminderStatus = reminderStatus;
     }
 
     public Date getJoinDate() {
