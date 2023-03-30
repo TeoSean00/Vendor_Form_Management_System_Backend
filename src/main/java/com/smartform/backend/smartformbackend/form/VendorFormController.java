@@ -53,10 +53,10 @@ public class VendorFormController {
     }
 
     // get all the updates
-    @GetMapping("/updates")
-    public List<VendorForm> getFormUpdates() {
+    @GetMapping("/updates/{id}")
+    public List<VendorForm> getFormUpdates(@PathVariable String id) {
         var returnList = new ArrayList<VendorForm>();
-        var vendorFormList = vendorFormDAO.findAll();
+        var vendorFormList = vendorFormDAO.findAllVendorForms(id);
         LocalDate currentDate = LocalDate.now();
         for (VendorForm form : vendorFormList) {
             LocalDate createDate = form.getCreateDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
