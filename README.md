@@ -21,7 +21,7 @@ Run the docker container <br />
 ```docker compose up```
 
 If you want to build and run the container at the same time
-```docker compose up --build
+```docker compose up --build```
 
 ### Default user credentials
 
