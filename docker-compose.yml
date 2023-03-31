@@ -9,6 +9,7 @@ services:
   smartform:
     platform: linux/amd64
     build: ./
+    restart: always
     image: smartform
     container_name: smartform
     ports:
