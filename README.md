@@ -20,7 +20,7 @@ Build the Images <br />
 Run the docker container <br />
 ```docker compose up```
 
-If you want to build and run the container at the same time
+If you want to build and run the container at the same time <br />
 ```docker compose up --build```
 
 ### Default user credentials
