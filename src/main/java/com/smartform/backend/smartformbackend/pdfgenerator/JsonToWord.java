@@ -94,14 +94,19 @@ public class JsonToWord {
         }
     }
 
-    public void saveDocument() {
+    public byte[] saveDocument(String filePath) {
         try {
             doc.write(fos);
             doc.close();
             System.out.println("Document saved successfully!");
+            Path wordPath = Paths.get(filePath);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] data = Files.readAllBytes(wordPath);
+            return data;
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
+        return null;
     }
 
     public byte[] saveToPdf(String filePath) {
