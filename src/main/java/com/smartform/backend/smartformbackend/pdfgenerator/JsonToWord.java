@@ -167,7 +167,7 @@ public class JsonToWord {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = dateObj.format(formatter);
 
-        table.getRow(2).getCell(0).setText("FORM ID");
+        table.getRow(2).getCell(0).setText(input.get("formCode").toString());
         table.getRow(2).getCell(0).setWidth("5000");
         ;
         table.getRow(2).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
