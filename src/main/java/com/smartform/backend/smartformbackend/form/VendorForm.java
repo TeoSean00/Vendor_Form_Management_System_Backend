@@ -30,7 +30,7 @@ public class VendorForm {
     private Map<String, Object> content;
     private Date deadline;
     private String finalApprover;
-    private String finalApprovedDate;
+    private Date finalApprovedDate;
 
     @JsonCreator
     public VendorForm(String vendorName, Date creationDate, Map<String, Object> content, Date deadline,
@@ -48,7 +48,7 @@ public class VendorForm {
         this.latestCompletedDate = null;
         this.latestCompletor = "";
         this.finalApprover = "";
-        this.finalApprovedDate = "";
+        this.finalApprovedDate = null;
     }
 
     public String getFinalApprover() {
@@ -59,11 +59,11 @@ public class VendorForm {
         this.finalApprover = finalApprover;
     }
 
-    public String getFinalApprovedDate() {
+    public Date getFinalApprovedDate() {
         return finalApprovedDate;
     }
 
-    public void setFinalApprovedDate(String finalApprovedDate) {
+    public void setFinalApprovedDate(Date finalApprovedDate) {
         this.finalApprovedDate = finalApprovedDate;
     }
 

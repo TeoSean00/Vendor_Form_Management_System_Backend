@@ -1,5 +1,6 @@
 package com.smartform.backend.smartformbackend.pdfgenerator;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
@@ -12,7 +13,7 @@ import org.json.JSONObject;
 public class PDFGeneratorLayer {
 
     // public void generatePdf(ArrayList<Map<String, Object>> inputList) {
-    public byte[] generatePdf(JSONObject jsonObj, String finalApprovedDate, String finalApprover, int revNumber) {
+    public byte[] generatePdf(JSONObject jsonObj, Date finalApprovedDate, String finalApprover, int revNumber) {
         String filePath = "form.docx"; // Preset name
         JsonToWord json2word = new JsonToWord();
         json2word.createDocument(filePath);
@@ -75,7 +76,7 @@ public class PDFGeneratorLayer {
         // System.out.println(pdfByteArr.length);
     }
 
-    public byte[] generateWord(JSONObject jsonObj, String finalApprovedDate, String finalApprover, int revNumber) {
+    public byte[] generateWord(JSONObject jsonObj, Date finalApprovedDate, String finalApprover, int revNumber) {
         String filePath = "form.docx"; // Preset name
         JsonToWord json2word = new JsonToWord();
         json2word.createDocument(filePath);
