@@ -35,9 +35,10 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 //\u2002 is the white space character
 public class JsonToWord {
-    XWPFDocument doc;
-    FileOutputStream fos;
-    int Counter = 1;
+    private XWPFDocument doc;
+    private FileOutputStream fos;
+    private int Counter = 1;
+
     public int getCounter() {
         return Counter;
     }
@@ -530,7 +531,7 @@ public class JsonToWord {
 
     }
 
-    public void drawBoolOption() {
+    private void drawBoolOption() {
         XWPFTable table = doc.createTable();
         table.setTableAlignment(TableRowAlign.RIGHT);
         XWPFTableRow tableRow = table.getRow(0);
@@ -538,7 +539,7 @@ public class JsonToWord {
         tableRow.getCell(0).setText(" YES / NO * ");
     }
 
-    public void drawTable(ArrayList<ArrayList<String>> tableInfo) {
+    private void drawTable(ArrayList<ArrayList<String>> tableInfo) {
         XWPFTable table = doc.createTable();
         int rowCounter = 0;
         int cellCounter = 0;
