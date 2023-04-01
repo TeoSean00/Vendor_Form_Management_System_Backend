@@ -25,15 +25,12 @@ import org.apache.poi.xwpf.usermodel.XWPFHeader;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell.XWPFVertAlign;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.docx4j.Docx4J;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHMerge;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STMerge;
 
 //\u2002 is the white space character
 public class JsonToWord {
@@ -122,16 +119,13 @@ public class JsonToWord {
         try {
             InputStream templateInputStream = new FileInputStream(filePath);
             WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(templateInputStream);
-            MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
             // Replace this name later
             String outputfilepath = "test.pdf";
             FileOutputStream os = new FileOutputStream(outputfilepath);
             Docx4J.toPDF(wordMLPackage, os);
             os.flush();
             os.close();
-
             Path pdfPath = Paths.get("test.pdf");
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] data = Files.readAllBytes(pdfPath);
 
             System.out.println("I AM CHECING THE BYTES ");
@@ -160,68 +154,25 @@ public class JsonToWord {
     public void createFormInfo(JSONObject input) {
         // Create a new header and set the text
         // XWPFHeader header = doc.createHeader(HeaderFooterType.DEFAULT);
-        XWPFTable table = doc.createTable(2, 3);
+        XWPFTable table = doc.createTable(3, 3);
+        table.setTableAlignment(TableRowAlign.CENTER);
         // para1.setAlignment(ParagraphAlignment.CENTER);
-        table.getRow(0).getCell(0).setText("Form Title: " + input.get("formName").toString());
-        table.getRow(0).getCell(1).setText("Form Code: " + input.get("formCode").toString());
-        table.getRow(0).getCell(2).setText("Vendor: " + this.vendorName);
-        // para1.createRun().setText("QUANTUM LEAP INCORPORATION PTE LTD");
-        // CTHMerge hMerge0 = CTHMerge.Factory.newInstance();
-        // for (int i=0; i <3; i++){
-        //     hMerge0.setVal(STMerge.CONTINUE);
-        //     table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge0);
-        // }
-
-        XWPFParagraph para2 = table.getRow(1).getCell(0).addParagraph();
-        para2.createRun().setText("Revision: " + this.revNumber);
-        // para2.setAlignment(ParagraphAlignment.CENTER);
-        // table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        table.getRow(0).getCell(0).setText("Form Title");
+        table.getRow(0).getCell(1).setText("Form Code");
+        table.getRow(0).getCell(2).setText("Vendor");
+        table.getRow(1).getCell(0).setText(input.get("formName").toString());
+        table.getRow(1).getCell(1).setText(input.get("formCode").toString());
+        table.getRow(1).getCell(2).setText(this.vendorName);
         
-        XWPFParagraph para3 = table.getRow(1).getCell(1).addParagraph();
-        para3.createRun().setText("Approver: " + this.finalApprover);
-        // para3.setAlignment(ParagraphAlignment.CENTER);
-        // table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
-        
-        XWPFParagraph para4 = table.getRow(1).getCell(2).addParagraph();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
-        System.out.println("The date is " + this.finalApprovedDate);
         String strDate = dateFormat.format(this.finalApprovedDate);  
-        para4.createRun().setText("Date Approved: " + strDate);
-        // para4.setAlignment(ParagraphAlignment.CENTER);
-        // table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
-        
-        // // Getting today date
-        // LocalDate dateObj = LocalDate.now();
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        // String date = dateObj.format(formatter);
+        table.getRow(2).getCell(0).setText("Revision: " + Integer.toString(this.revNumber));
+        table.getRow(2).getCell(1).setText("Approver: " +this.finalApprover );
+        table.getRow(2).getCell(2).setText("Date Approved: " + strDate);
+       
 
-        // // table.getRow(2).getCell(0).setText("Form Code: " + input.get("formCode").toString());
-        // table.getRow(2).getCell(0).setWidth("5000");
-        // ;
-        // table.getRow(2).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
-        // table.getRow(2).getCell(1).setText("Date: " + date);
-        // table.getRow(2).getCell(1).setWidth("5000");
-        // ;
-        // table.getRow(2).getCell(2).setText("Revision: " + "v1.0.1");
-        // table.getRow(2).getCell(2).setWidth("5000");
-        // ;
-
-        // // Merging headers
-        // CTHMerge hMerge = CTHMerge.Factory.newInstance();
-        // CTHMerge hMerge2 = CTHMerge.Factory.newInstance();
-        // for (int i = 0; i < 3; i++) {
-        //     // Merge cells in row 1
-        //     if (i == 0) {
-        //         hMerge.setVal(STMerge.RESTART);
-        //         hMerge2.setVal(STMerge.RESTART);
-        //     } else {
-        //         hMerge.setVal(STMerge.CONTINUE);
-        //         hMerge2.setVal(STMerge.CONTINUE);
-        //     }
-        //     table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge);
-        //     table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
-        // }
         //Creating header
+
         XWPFHeaderFooterPolicy headerPolicy = doc.getHeaderFooterPolicy();
         if (headerPolicy == null) {
             headerPolicy = doc.createHeaderFooterPolicy();
@@ -237,7 +188,7 @@ public class JsonToWord {
         run1.setFontSize(10);
         run1.setText(input.get("formName").toString()
                 + "          QUANTUM LEAP INCORPORATION       " + this.vendorName);
-        // Creating footers
+
         XWPFParagraph paragraph2 = doc.createParagraph();
         // Create a footer
         XWPFHeaderFooterPolicy footerPolicy = doc.getHeaderFooterPolicy();
@@ -254,7 +205,7 @@ public class JsonToWord {
         XWPFRun run2 = paragraph2.createRun();
         run2.setFontSize(10);
         run2.setText(input.get("formName").toString()
-                + "          QUANTUM LEAP INCORPORATION       " + this.vendorName);
+                + "         QUANTUM LEAP INCORPORATION       " + this.vendorName);
     }
 
     /**
@@ -363,16 +314,6 @@ public class JsonToWord {
             } else {
                 optionRun.setText("[ ] " + options.get(i));
             }
-            // if (shortAnswer){
-            //     // Means need to append whatever short answer it is at the back 
-            //     String shortAnswerString = input.getJSONArray("shortAnswerArr").getString(i);
-            //     XWPFRun answerRun = para.createRun();
-            //     if (shortAnswerString.length() != 0) {
-            //         answerRun.setText(": " + shortAnswerString);
-            //     } else {
-            //         answerRun.setText(": ___________________________");
-            //     }
-            // }
         }
     }
     /**
@@ -432,17 +373,6 @@ public class JsonToWord {
      * Creates a likert group from 1 to 5.
      */
     public void createLikertGroup(JSONObject input) {
-        // HashMap<String, Object> likertInput = new HashMap<String, Object>() {{
-        // List<String> options = new ArrayList<>();
-        // options.add("Attendance in Safety Meeting");
-        // options.add("Tool Box Meeting");
-        // put("order", 1);
-        // put("label", "Part 1: Participation and Safety");
-        // put("options", options);
-        // put("type", "likertGroup");
-        // }};
-        // Tables are always 6 columns, number of options + 3
-
         JSONArray options = (JSONArray) input.get("options");
         int noOfOptions = options.length();
         XWPFRun run = doc.createParagraph().createRun();
@@ -468,27 +398,17 @@ public class JsonToWord {
         table.getRow(1).getCell(3).setWidth("10%");
         table.getRow(1).getCell(4).setWidth("10%");
         table.getRow(1).getCell(5).setWidth("10%");
-        // Set score at bottom
-        // Merging headers
-        CTHMerge hMerge = CTHMerge.Factory.newInstance();
-        CTHMerge hMerge2 = CTHMerge.Factory.newInstance();
-        CTHMerge hMerge3 = CTHMerge.Factory.newInstance();
-        for (int i = 0; i < 6; i++) {
-            // Merge cells in row 1
-            if (i == 0) {
-                hMerge2.setVal(STMerge.RESTART);
-                hMerge3.setVal(STMerge.RESTART);
-                hMerge.setVal(STMerge.CONTINUE);
-            } else {
-                hMerge2.setVal(STMerge.CONTINUE);
-                hMerge3.setVal(STMerge.CONTINUE);
+
+        // Center align all cells except first column
+        for (XWPFTableRow row : table.getRows()) {
+            for (int i = 1; i < row.getTableCells().size(); i++) {
+                XWPFTableCell cell = row.getCell(i);
+                // Set horizontal alignment
+                cell.getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+                // Set vertical alignment
+                cell.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
             }
-            table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge);
-            // table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
-            table.getRow(noOfOptions + 2).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
         }
-
-
         // Filling in options
         for (int i = 0; i < options.length(); i++) {
             table.getRow(2 + i).getCell(0).setText(options.getString(i));
@@ -502,7 +422,7 @@ public class JsonToWord {
             table.getRow(2+i).getCell(2+i).addParagraph();
             table.getRow(2+i).getCell(2+i).setText("X");
         }
-        table.getRow(noOfOptions + 2).getCell(0).setText("SCORE = ");
+        table.getRow(noOfOptions + 2).getCell(0).setText("SCORE= ");
         table.getRow(noOfOptions + 2).getCell(1).setText(Integer.toString(likertScore));
     }
 
