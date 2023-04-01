@@ -2,10 +2,6 @@ package com.smartform.backend.smartformbackend.pdfgenerator;
 
 import java.util.Date;
 import java.util.Iterator;
-import java.io.ByteArrayOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,13 +66,9 @@ public class PDFGeneratorLayer {
                 }
             }
         }
-        // json2word.createSubcontractorAcknowledgement();
-        // json2word.createApprovalTable();
         json2word.saveDocument(filePath);
         byte[] pdfByteArr = json2word.saveToPdf(filePath);
         return pdfByteArr;
-        // System.out.println("I AM CHECING THE BYTES ");
-        // System.out.println(pdfByteArr.length);
     }
 
     public byte[] generateWord(JSONObject jsonObj, Date finalApprovedDate, String finalApprover, int revNumber,
@@ -85,8 +77,6 @@ public class PDFGeneratorLayer {
         JsonToWord json2word = new JsonToWord();
         json2word.receiveAdditionalInfo(finalApprovedDate, finalApprover, revNumber, vendorName);
         json2word.createDocument(filePath);
-        // json2word.writeLine("Testing this line!");
-        // System.out.println(jsonObj);
         JSONArray formContent = jsonObj.getJSONArray("FormContent");
         JSONObject formInfo = jsonObj.getJSONObject("FormInfo");
         json2word.createFormInfo(formInfo);
@@ -99,7 +89,6 @@ public class PDFGeneratorLayer {
             for (int i2 = 0; i2 < sectionArray.length(); i2++) {
                 try {
                     JSONObject questionObj = sectionArray.getJSONObject(i2);
-                    // System.out.println(questionObj);
                     System.out.println(questionObj.get("type"));
                     // Currently missing header section, signature, radio group
 
@@ -135,13 +124,10 @@ public class PDFGeneratorLayer {
                 }
             }
         }
-        // json2word.createSubcontractorAcknowledgement();
-        // json2word.createApprovalTable();
-        byte[] byteArray = json2word.saveDocument(filePath);
 
+        byte[] byteArray = json2word.saveDocument(filePath);
         return byteArray;
-        // System.out.println("I AM CHECING THE BYTES ");
-        // System.out.println(pdfByteArr.length);
+
     }
 
 }
