@@ -51,21 +51,21 @@ public class VendorDAO {
         return mongoTemplate.findById(topicId, Vendor.class);
     }
 
-    public Map<String, Integer> getAvgRejections() {
+    public Map<String, Double> getAvgRejections() {
         List<VendorForm> forms = mongoTemplate.findAll(VendorForm.class);
-        Map<String, Integer> formsPerVendor = new HashMap<String, Integer>();
-        Map<String, Integer> totalRejPerVendor = new HashMap<String, Integer>();
+        Map<String, Double> formsPerVendor = new HashMap<String, Double>();
+        Map<String, Double> totalRejPerVendor = new HashMap<String, Double>();
 
         for (VendorForm form : forms) {
             var vendorName = form.getVendorName();
             var totalRej = form.getRejectionCount();
 
-            totalRejPerVendor.put(vendorName, totalRejPerVendor.getOrDefault(vendorName, 0) + totalRej);
-            formsPerVendor.put(vendorName, formsPerVendor.getOrDefault(vendorName, 0) + 1);
+            totalRejPerVendor.put(vendorName, totalRejPerVendor.getOrDefault(vendorName, 0.0) + totalRej);
+            formsPerVendor.put(vendorName, formsPerVendor.getOrDefault(vendorName, 0.0) + 1);
         }
 
         for (String key : totalRejPerVendor.keySet()) {
-            totalRejPerVendor.put(key, totalRejPerVendor.get(key) / formsPerVendor.get(key));
+            totalRejPerVendor.put(key, Math.ceil(totalRejPerVendor.get(key) / formsPerVendor.get(key)));
         }
         return totalRejPerVendor;
     }
