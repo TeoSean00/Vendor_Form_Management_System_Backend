@@ -1,10 +1,13 @@
 package com.smartform.backend.smartformbackend.mail;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,7 @@ public class FormReminderScheduler {
     @Autowired
     private EmailService emailService;
 
-    @Scheduled(cron = "0 0 8 * * *") // run every day at midnight
+    @Scheduled(cron = "0 0 9 * * *") // run every day at midnight
     public void sendReminderEmailsForForms() {
         System.out.print("---------------------RUNNING SCHEDULE EMAIL----------------------------------");
         List<Vendor> vendors = vendorDAO.findAll();
@@ -48,20 +51,23 @@ public class FormReminderScheduler {
                             .toLocalDate();
                     if (deadlineDate.isBefore(currentDate)) {
                         int daysOverdue = (int) ChronoUnit.DAYS.between(deadlineDate, currentDate);
-                        // if (daysOverdue <= 7 && daysOverdue % 3 == 0) {
-                        if (daysOverdue <= 7) {
+                        if (daysOverdue <= 7 && daysOverdue % 3 == 0) {
                             System.out.print("FORM IS OVERDUE");
                             List<User> users = userRepository.findUsersByVendor(form.getVendorId());
                             for (User user : users) {
                                 emailService.sendSimpleMessage(user.getEmail(), "Reminder: Form is overdue",
                                         "Please submit your form as soon as possible.");
                             }
+                            form.setLastReminderDate(new Date());
+                            vendorFormDAO.updateVendorForm(form.getId(), form);
                         } else if (daysOverdue > 7) {
                             List<User> users = userRepository.findUsersByVendor(form.getVendorId());
                             for (User user : users) {
                                 emailService.sendSimpleMessage(user.getEmail(), "Reminder: Form is overdue",
                                         "Please submit your form as soon as possible.");
                             }
+                            form.setLastReminderDate(new Date());
+                            vendorFormDAO.updateVendorForm(form.getId(), form);
                         }
                     }
 

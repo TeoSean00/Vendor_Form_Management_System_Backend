@@ -31,6 +31,7 @@ public class VendorForm {
     private Date deadline;
     private String finalApprover;
     private Date finalApprovedDate;
+    private Date lastReminderDate;
 
     @JsonCreator
     public VendorForm(String vendorName, Date creationDate, Map<String, Object> content, Date deadline,
@@ -49,6 +50,15 @@ public class VendorForm {
         this.latestCompletor = "";
         this.finalApprover = "";
         this.finalApprovedDate = null;
+        this.lastReminderDate = null;
+    }
+
+    public Date getLastReminderDate() {
+        return lastReminderDate;
+    }
+
+    public void setLastReminderDate(Date lastReminderDate) {
+        this.lastReminderDate = lastReminderDate;
     }
 
     public String getFinalApprover() {
