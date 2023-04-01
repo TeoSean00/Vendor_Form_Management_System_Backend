@@ -17,11 +17,13 @@ public class PDFGeneratorLayer {
             String vendorName) {
         String filePath = "form.docx"; // Preset name
         JsonToWord json2word = new JsonToWord();
+        json2word.receiveAdditionalInfo(finalApprovedDate, finalApprover, revNumber, vendorName);
         json2word.createDocument(filePath);
         // json2word.writeLine("Testing this line!");
         // System.out.println(jsonObj);
         JSONArray formContent = jsonObj.getJSONArray("FormContent");
         JSONObject formInfo = jsonObj.getJSONObject("FormInfo");
+        
         json2word.createFormInfo(formInfo);
 
         for (int i = 0; i < formContent.length(); i++) {
@@ -81,6 +83,7 @@ public class PDFGeneratorLayer {
             String vendorName) {
         String filePath = "form.docx"; // Preset name
         JsonToWord json2word = new JsonToWord();
+        json2word.receiveAdditionalInfo(finalApprovedDate, finalApprover, revNumber, vendorName);
         json2word.createDocument(filePath);
         // json2word.writeLine("Testing this line!");
         // System.out.println(jsonObj);
