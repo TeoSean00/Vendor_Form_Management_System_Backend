@@ -13,7 +13,8 @@ import org.json.JSONObject;
 public class PDFGeneratorLayer {
 
     // public void generatePdf(ArrayList<Map<String, Object>> inputList) {
-    public byte[] generatePdf(JSONObject jsonObj, Date finalApprovedDate, String finalApprover, int revNumber) {
+    public byte[] generatePdf(JSONObject jsonObj, Date finalApprovedDate, String finalApprover, int revNumber,
+            String vendorName) {
         String filePath = "form.docx"; // Preset name
         JsonToWord json2word = new JsonToWord();
         json2word.createDocument(filePath);
@@ -78,7 +79,8 @@ public class PDFGeneratorLayer {
         // System.out.println(pdfByteArr.length);
     }
 
-    public byte[] generateWord(JSONObject jsonObj, Date finalApprovedDate, String finalApprover, int revNumber) {
+    public byte[] generateWord(JSONObject jsonObj, Date finalApprovedDate, String finalApprover, int revNumber,
+            String vendorName) {
         String filePath = "form.docx"; // Preset name
         JsonToWord json2word = new JsonToWord();
         json2word.createDocument(filePath);
