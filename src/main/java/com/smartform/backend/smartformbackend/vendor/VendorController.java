@@ -65,7 +65,7 @@ public class VendorController {
     }
 
     @GetMapping("/getAverageRejection")
-    public Map<String, Integer> getAverageRejection() {
+    public Map<String, Double> getAverageRejection() {
         return vendorDAO.getAvgRejections();
     }
 
