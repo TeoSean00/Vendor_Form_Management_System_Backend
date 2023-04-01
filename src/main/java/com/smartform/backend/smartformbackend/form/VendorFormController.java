@@ -134,7 +134,7 @@ public class VendorFormController {
             json = new ObjectMapper().writeValueAsString(form.getContent());
             JSONObject jsonObj = new JSONObject(json);
             bytes = pdfGenerator.generatePdf(jsonObj, form.getFinalApprovedDate(), form.getFinalApprover(),
-                    form.getRevNumber());
+                    form.getRevNumber(), form.getVendorName());
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
@@ -202,7 +202,7 @@ public class VendorFormController {
             json = new ObjectMapper().writeValueAsString(form.getContent());
             JSONObject jsonObj = new JSONObject(json);
             bytes = pdfGenerator.generateWord(jsonObj, form.getFinalApprovedDate(), form.getFinalApprover(),
-                    form.getRevNumber());
+                    form.getRevNumber(), form.getVendorName());
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_XML);
