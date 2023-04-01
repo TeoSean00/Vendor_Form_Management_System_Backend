@@ -21,6 +21,8 @@ public class PDFGeneratorLayer {
         // System.out.println(jsonObj);
         JSONArray formContent = jsonObj.getJSONArray("FormContent");
         JSONObject formInfo = jsonObj.getJSONObject("FormInfo");
+        json2word.receieveAdditionalInfo(finalApprovedDate, finalApprover, revNumber);
+        
         json2word.createFormInfo(formInfo);
 
         for (int i = 0; i < formContent.length(); i++) {

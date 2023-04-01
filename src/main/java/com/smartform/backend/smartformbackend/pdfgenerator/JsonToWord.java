@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
@@ -38,6 +39,9 @@ public class JsonToWord {
     private XWPFDocument doc;
     private FileOutputStream fos;
     private int Counter = 1;
+    private Date finalApprovedDate; 
+    private String finalApprover;
+    private int revNumber;
 
     public int getCounter() {
         return Counter;
@@ -109,6 +113,7 @@ public class JsonToWord {
         }
         return null;
     }
+    
 
     public byte[] saveToPdf(String filePath) {
         try {
@@ -135,6 +140,12 @@ public class JsonToWord {
         return null;
     }
 
+    public void receieveAdditionalInfo(Date finalApprovedDate, String finalApprover, int revNumber){
+        this.finalApprovedDate = finalApprovedDate;
+        this.finalApprover = finalApprover;
+        this.revNumber = revNumber;
+    }
+
     public void writeLine(String line) {
         // Creates a paragraph
         XWPFParagraph para = doc.createParagraph();
@@ -149,13 +160,15 @@ public class JsonToWord {
 
         XWPFParagraph para1 = table.getRow(0).getCell(0).addParagraph();
         para1.setAlignment(ParagraphAlignment.CENTER);
-        para1.createRun().setText("QUANTUM LEAP INCORPORATION PTE LTD");
+        para1.createRun().setText("Form Title: " + input.get("formName").toString());
+        table.getRow(0).getCell(1).setText("Form Code: " + input.get("formCode").toString());
+        // para1.createRun().setText("QUANTUM LEAP INCORPORATION PTE LTD");
         table.getRow(0).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
-        CTHMerge hMerge0 = CTHMerge.Factory.newInstance();
-        for (int i=0; i <3; i++){
-            hMerge0.setVal(STMerge.CONTINUE);
-            table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge0);
-        }
+        // CTHMerge hMerge0 = CTHMerge.Factory.newInstance();
+        // for (int i=0; i <3; i++){
+        //     hMerge0.setVal(STMerge.CONTINUE);
+        //     table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge0);
+        // }
 
         XWPFParagraph para2 = table.getRow(1).getCell(0).addParagraph();
         para2.createRun().setText(input.get("formName").toString());
@@ -167,7 +180,7 @@ public class JsonToWord {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = dateObj.format(formatter);
 
-        table.getRow(2).getCell(0).setText(input.get("formCode").toString());
+        table.getRow(2).getCell(0).setText("Form Code: " + input.get("formCode").toString());
         table.getRow(2).getCell(0).setWidth("5000");
         ;
         table.getRow(2).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
