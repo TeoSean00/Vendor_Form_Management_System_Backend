@@ -29,7 +29,6 @@ public class Vendor {
         this.country = country;
         this.details = details;
         this.joinDate = joinDate;
-        this.reminderStatus = true;
     }
 
     public Boolean getReminderStatus() {

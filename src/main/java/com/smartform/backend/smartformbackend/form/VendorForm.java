@@ -29,7 +29,8 @@ public class VendorForm {
     private String latestCompletor;
     private Map<String, Object> content;
     private Date deadline;
-    private LocalDateTime reminderSentDate;
+    private String finalApprover;
+    private String finalApprovedDate;
 
     @JsonCreator
     public VendorForm(String vendorName, Date creationDate, Map<String, Object> content, Date deadline,
@@ -46,20 +47,24 @@ public class VendorForm {
         this.rejectionDetails.put("vendor", null);
         this.latestCompletedDate = null;
         this.latestCompletor = "";
+        this.finalApprover = "";
+        this.finalApprovedDate = "";
     }
 
-    // Check if deadline has exceeded
-    public boolean hasExceededDeadline() {
-        LocalDateTime now = LocalDateTime.now();
-        return now.isAfter(deadline.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+    public String getFinalApprover() {
+        return finalApprover;
     }
 
-    public LocalDateTime getReminderSentDate() {
-        return reminderSentDate;
+    public void setFinalApprover(String finalApprover) {
+        this.finalApprover = finalApprover;
     }
 
-    public void setReminderSentDate(LocalDateTime reminderSentDate) {
-        this.reminderSentDate = reminderSentDate;
+    public String getFinalApprovedDate() {
+        return finalApprovedDate;
+    }
+
+    public void setFinalApprovedDate(String finalApprovedDate) {
+        this.finalApprovedDate = finalApprovedDate;
     }
 
     public Date getLatestCompletedDate() {

@@ -45,6 +45,7 @@ public class VendorController {
     // getting the the request payload
     public void addVendor(@RequestBody Vendor vendor) {
         vendor.setJoinDate(new Date());
+        vendor.setReminderStatus(true);
         vendorDAO.insertVendor(vendor);
     }
 
