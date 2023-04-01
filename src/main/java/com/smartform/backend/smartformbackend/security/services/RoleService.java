@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.smartform.backend.smartformbackend.auth.ERole;
@@ -12,6 +13,7 @@ import com.smartform.backend.smartformbackend.auth.Role;
 import com.smartform.backend.smartformbackend.auth.repository.RoleRepository;
 
 @Component
+@Order(1)
 public class RoleService implements CommandLineRunner {
 
     @Autowired

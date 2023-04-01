@@ -189,4 +189,30 @@ public class VendorFormController {
         // HashMap<String, Object> formContent = content.getFormContent();
         // pdfGenerator.generatePdf(formContent);
     }
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
+    @RequestMapping("generateWordDocument/{id}")
+    public ResponseEntity<byte[]> generateWord(@PathVariable String id) {
+        PDFGeneratorLayer pdfGenerator = new PDFGeneratorLayer();
+        VendorForm form = vendorFormDAO.getVendorForm(id);
+        String json;
+        byte[] bytes;
+        try {
+            json = new ObjectMapper().writeValueAsString(form.getContent());
+            JSONObject jsonObj = new JSONObject(json);
+            bytes = pdfGenerator.generateWord(jsonObj);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_XML);
+            headers.setContentLength(bytes.length);
+            headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+            System.out.println("I AM CHECING THE BYTES ");
+            System.out.println(bytes.length);
+            return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

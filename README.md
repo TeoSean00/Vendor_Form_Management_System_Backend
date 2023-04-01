@@ -10,15 +10,29 @@ https://www.baeldung.com/install-maven-on-windows-linux-mac
 To install project packages with maven <br />
 ```mvn clean install```
 
-### Run mongodb image on docker <br />
+### Check that your docker desktop/daemon is running <br />
+### Install Docker Desktop (If you don't have it already)
+https://www.docker.com/products/docker-desktop/ 
 
-Pull the mongo image <br />
-```docker pull mongo: latest (automatically pulls latest version)```<br />
+Build the Images <br />
+```docker compose build```<br />
 
-Run the two containers from docker-compose.yaml <br />
-```docker-compose up --build```
+Run the docker container <br />
+```docker compose up```
 
-Remember to signup your own account through postman to access springboot through your frontend!
+If you want to build and run the container at the same time <br />
+```docker compose up --build```
+
+### Default user credentials
+
+For admin 
+Username : admin
+Password : 12345678
+
+For approver
+Username : approver
+Password : 87654321
+
 
 
 ___
