@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class JsonToWord {
     private Date finalApprovedDate; 
     private String finalApprover;
     private int revNumber;
+    private String vendorName;
 
     public int getCounter() {
         return Counter;
@@ -94,6 +97,7 @@ public class JsonToWord {
             doc = new XWPFDocument();
             fos = new FileOutputStream(new File(filePath));
             System.out.println("Created successfully");
+            System.out.println("date is " + this.finalApprovedDate + this.finalApprover + this.revNumber);
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
@@ -140,10 +144,11 @@ public class JsonToWord {
         return null;
     }
 
-    public void receieveAdditionalInfo(Date finalApprovedDate, String finalApprover, int revNumber){
+    public void receiveAdditionalInfo(Date finalApprovedDate, String finalApprover, int revNumber, String vendorName){
         this.finalApprovedDate = finalApprovedDate;
         this.finalApprover = finalApprover;
         this.revNumber = revNumber;
+        this.vendorName = vendorName;
     }
 
     public void writeLine(String line) {
@@ -162,6 +167,7 @@ public class JsonToWord {
         para1.setAlignment(ParagraphAlignment.CENTER);
         para1.createRun().setText("Form Title: " + input.get("formName").toString());
         table.getRow(0).getCell(1).setText("Form Code: " + input.get("formCode").toString());
+        table.getRow(0).getCell(1).setText("Vendor: " + this.vendorName);
         // para1.createRun().setText("QUANTUM LEAP INCORPORATION PTE LTD");
         table.getRow(0).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
         // CTHMerge hMerge0 = CTHMerge.Factory.newInstance();
@@ -171,41 +177,54 @@ public class JsonToWord {
         // }
 
         XWPFParagraph para2 = table.getRow(1).getCell(0).addParagraph();
-        para2.createRun().setText(input.get("formName").toString());
+        para2.createRun().setText("Revision: " + this.revNumber);
         para2.setAlignment(ParagraphAlignment.CENTER);
-        table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        // table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        
+        XWPFParagraph para3 = table.getRow(1).getCell(1).addParagraph();
+        para3.createRun().setText("Approver: " + this.finalApprover);
+        para3.setAlignment(ParagraphAlignment.CENTER);
+        // table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        
+        XWPFParagraph para4 = table.getRow(1).getCell(1).addParagraph();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
+        System.out.println("The date is " + this.finalApprovedDate);
+        String strDate = dateFormat.format(this.finalApprovedDate);  
+        para4.createRun().setText("Date Approved: " + strDate);
+        para4.setAlignment(ParagraphAlignment.CENTER);
+        // table.getRow(1).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        
+        // // Getting today date
+        // LocalDate dateObj = LocalDate.now();
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // String date = dateObj.format(formatter);
 
-        // Getting today date
-        LocalDate dateObj = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String date = dateObj.format(formatter);
+        // // table.getRow(2).getCell(0).setText("Form Code: " + input.get("formCode").toString());
+        // table.getRow(2).getCell(0).setWidth("5000");
+        // ;
+        // table.getRow(2).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
+        // table.getRow(2).getCell(1).setText("Date: " + date);
+        // table.getRow(2).getCell(1).setWidth("5000");
+        // ;
+        // table.getRow(2).getCell(2).setText("Revision: " + "v1.0.1");
+        // table.getRow(2).getCell(2).setWidth("5000");
+        // ;
 
-        table.getRow(2).getCell(0).setText("Form Code: " + input.get("formCode").toString());
-        table.getRow(2).getCell(0).setWidth("5000");
-        ;
-        table.getRow(2).getCell(0).setVerticalAlignment(XWPFVertAlign.TOP);
-        table.getRow(2).getCell(1).setText("Date: " + date);
-        table.getRow(2).getCell(1).setWidth("5000");
-        ;
-        table.getRow(2).getCell(2).setText("Revision: " + "v1.0.1");
-        table.getRow(2).getCell(2).setWidth("5000");
-        ;
-
-        // Merging headers
-        CTHMerge hMerge = CTHMerge.Factory.newInstance();
-        CTHMerge hMerge2 = CTHMerge.Factory.newInstance();
-        for (int i = 0; i < 3; i++) {
-            // Merge cells in row 1
-            if (i == 0) {
-                hMerge.setVal(STMerge.RESTART);
-                hMerge2.setVal(STMerge.RESTART);
-            } else {
-                hMerge.setVal(STMerge.CONTINUE);
-                hMerge2.setVal(STMerge.CONTINUE);
-            }
-            table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge);
-            table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
-        }
+        // // Merging headers
+        // CTHMerge hMerge = CTHMerge.Factory.newInstance();
+        // CTHMerge hMerge2 = CTHMerge.Factory.newInstance();
+        // for (int i = 0; i < 3; i++) {
+        //     // Merge cells in row 1
+        //     if (i == 0) {
+        //         hMerge.setVal(STMerge.RESTART);
+        //         hMerge2.setVal(STMerge.RESTART);
+        //     } else {
+        //         hMerge.setVal(STMerge.CONTINUE);
+        //         hMerge2.setVal(STMerge.CONTINUE);
+        //     }
+        //     table.getRow(0).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge);
+        //     table.getRow(1).getCell(i).getCTTc().addNewTcPr().setHMerge(hMerge2);
+        // }
 
         // Creating footers
         XWPFParagraph paragraph = doc.createParagraph();
