@@ -40,7 +40,7 @@ public class VendorFormDAO {
     }
 
     // delete topic
-    public void deleteWorkflow(String id) {
+    public void deleteVendorForm(String id) {
         VendorForm deleteObject = getVendorForm(id);
         mongoTemplate.remove(deleteObject);
     }
