@@ -47,8 +47,8 @@ public class VendorDAO {
         mongoTemplate.remove(deleteObject);
     }
 
-    public Vendor getVendor(final String topicId) {
-        return mongoTemplate.findById(topicId, Vendor.class);
+    public Vendor getVendor(final String id) {
+        return mongoTemplate.findById(id, Vendor.class);
     }
 
     public Map<String, Double> getAvgRejections() {
