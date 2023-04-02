@@ -418,9 +418,10 @@ public class JsonToWord {
         int likertScore = 0;
         JSONArray scoreList = input.getJSONArray("input");
         for (int i=0;i<scoreList.length();i++){
+            //Goes from 1 to 0
             likertScore += scoreList.getInt(i);
-            table.getRow(2+i).getCell(2+i).addParagraph();
-            table.getRow(2+i).getCell(2+i).setText("X");
+            table.getRow(2+i).getCell(Integer.parseInt(scoreList.getString(i))).addParagraph();
+            table.getRow(2+i).getCell(Integer.parseInt(scoreList.getString(i))).setText("X");
         }
         table.getRow(noOfOptions + 2).getCell(0).setText("SCORE= ");
         table.getRow(noOfOptions + 2).getCell(1).setText(Integer.toString(likertScore));
