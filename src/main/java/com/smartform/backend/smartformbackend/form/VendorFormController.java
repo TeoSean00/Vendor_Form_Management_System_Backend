@@ -120,7 +120,7 @@ public class VendorFormController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public void deleteForm(@PathVariable String id) {
-        vendorFormDAO.deleteWorkflow(id);
+        vendorFormDAO.deleteVendorForm(id);
     }
 
     // @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
