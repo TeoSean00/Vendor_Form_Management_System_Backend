@@ -1,4 +1,4 @@
-# smartform-backend
+# Vendor_Form_Management_System_Backend
 Requires Java 17 
 Springboot Version 3.0.2
 https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html
