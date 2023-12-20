@@ -1,17 +1,16 @@
 # GoForm (Backend)
 
 ## Youtube Demo of the Application
-- https://youtu.be/mXnO4Y1JEVU
+- [Youtube Link](https://youtu.be/mXnO4Y1JEVU)
 
 ## Getting Started
-- Install Maven 
-- https://www.baeldung.com/install-maven-on-windows-linux-mac
+- [Install Maven](https://www.baeldung.com/install-maven-on-windows-linux-mac)
 
-To install project packages with maven <br />
+- To install project packages with maven <br />
 ```mvn clean install```
 
 ### Install Docker Desktop
-- https://www.docker.com/products/docker-desktop/ 
+- [Install Docker](https://www.docker.com/products/docker-desktop/)
 
 ### Check that your docker desktop/daemon is running <br />
 
